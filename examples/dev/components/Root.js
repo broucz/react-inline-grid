@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Grid, Row, Cell } from 'react-inline-grid';
+import { COLOR } from '../constants';
+import Box from './Box';
 
-const b = {
-  gray: { background: '#cccccc' },
-  primary: { background: '#4285F4' }
-};
+const { gray, primary } = COLOR;
 const options = [
   {
     name: 'desktop',
@@ -38,7 +37,7 @@ class Root extends Component {
       <Grid options={options}>
         <Row is="center">
           <Cell is="11 tablet-4 phone-4">
-            <div className="box" style={b.gray}></div>
+            <Box size="big" color={gray}/>
           </Cell>
         </Row>
       </Grid>
