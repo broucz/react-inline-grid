@@ -1,3 +1,6 @@
 lib
 dist
 node_modules
+examples/dev/node_modules
+examples/dev/server.js
+examples/dev/webpack.config.js
