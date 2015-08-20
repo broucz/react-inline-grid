@@ -1,0 +1,55 @@
+{
+  "name": "react-inline-grid",
+  "description": "Predictable flexbox based grid for React.",
+  "main": "./lib/index.js",
+  "version": "0.1.0",
+  "scripts": {
+    "clean": "rimraf lib dist",
+    "lint": "eslint src",
+    "build:lib": "babel src --out-dir lib",
+    "build:umd": "webpack src/index.js dist/react-inline-grid.js --config webpack.config.development.js",
+    "build:umd:min": "webpack src/index.js dist/react-inline-grid.min.js --config webpack.config.production.js",
+    "build": "npm run build:lib && npm run build:umd && npm run build:umd:min",
+    "prepublish": "npm run clean && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/broucz/react-inline-grid.git"
+  },
+  "keywords": [
+    "react",
+    "reactjs",
+    "grid",
+    "inline",
+    "style",
+    "flux",
+    "redux",
+    "immutable",
+    "predictable"
+  ],
+  "author": "Pierre Brouca <broucapierre@gmail.com> (https://github.com/broucz)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/broucz/react-inline-grid/issues"
+  },
+  "homepage": "https://github.com/broucz/react-inline-grid",
+  "dependencies": {
+    "immutable": "^3.7.4",
+    "react-redux": "^0.9.0",
+    "redux": "^1.0.1"
+  },
+  "devDependencies": {
+    "babel": "^5.8.21",
+    "babel-core": "^5.8.22",
+    "babel-eslint": "^4.0.10",
+    "babel-loader": "^5.3.2",
+    "eslint": "^1.2.0",
+    "eslint-config-airbnb": "0.0.7",
+    "eslint-plugin-react": "^3.2.3",
+    "react-hot-loader": "^1.2.8",
+    "rimraf": "^2.4.2",
+    "webpack": "^1.11.0",
+    "webpack-dev-server": "^1.10.1"
+  }
+}
