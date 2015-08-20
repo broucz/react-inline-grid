@@ -49,7 +49,7 @@ class Distribution extends Component {
           </Cell>
         </Row>
       </div>
-    )
+    );
   }
 }
 

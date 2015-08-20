@@ -102,7 +102,7 @@ class Alignments extends Component {
           </Cell>
         </Row>
       </div>
-    )
+    );
   }
 }
 

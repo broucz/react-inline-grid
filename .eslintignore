@@ -4,3 +4,6 @@ node_modules
 examples/dev/node_modules
 examples/dev/server.js
 examples/dev/webpack.config.js
+examples/showcase/node_modules
+examples/showcase/server.js
+examples/showcase/webpack.config.js

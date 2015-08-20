@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 const STYLE_PROPS = {
   boxDefault: {
@@ -25,5 +25,10 @@ class Box extends Component {
     );
   }
 }
+
+Box.propTypes = {
+  color: PropTypes.object,
+  size: PropTypes.string
+};
 
 export default Box;
