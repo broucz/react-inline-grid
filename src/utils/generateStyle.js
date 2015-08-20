@@ -51,14 +51,14 @@ export default function generateStyle(options) {
       container.setIn([name, 'start', 'justifyContent'], `flex-start`);
       container.setIn([name, 'center', 'justifyContent'], `center`);
       container.setIn([name, 'end', 'justifyContent'], `flex-end`);
+      container.setIn([name, 'around', 'justifyContent'], `space-around`);
+      container.setIn([name, 'between', 'justifyContent'], `space-between`);
 
       // CELL
       container.setIn([name, 'top', 'alignSelf'], `flex-start`);
       container.setIn([name, 'middle', 'alignSelf'], `center`);
       container.setIn([name, 'bottom', 'alignSelf'], `flex-end`);
       container.setIn([name, 'stretch', 'alignSelf'], `stretch`);
-      container.setIn([name, 'around', 'justifyContent'], `space-around`);
-      container.setIn([name, 'between', 'justifyContent'], `space-between`);
 
 
       // Define partial sizes for columnNumber < totalColumns.
