@@ -10,9 +10,11 @@
     "build:umd": "webpack src/index.js dist/react-inline-grid.js --config webpack.config.development.js",
     "build:umd:min": "webpack src/index.js dist/react-inline-grid.min.js --config webpack.config.production.js",
     "build:examples": "babel-node examples/buildAll.js",
-    "build:gh": "webpack -p --config examples/gh-pages/webpack.config.production.js && cp examples/gh-pages/index.html examples/gh-pages/dist/",
     "build": "npm run build:lib && npm run build:umd && npm run build:umd:min",
     "prepublish": "npm run clean && npm run build",
+    "gh:clean": "rimraf examples/gh-pages/dist",
+    "gh:build": "webpack -p --config examples/gh-pages/webpack.config.production.js && cp examples/gh-pages/index.html examples/gh-pages/dist/",
+    "gh:publish": "npm run gh:clean && npm run gh:build && cd examples/gh-pages/dist && git init && git commit --allow-empty -m 'update gh-pages' && git checkout -b gh-pages && git add . && git commit -am 'update gh-pages' && git push git@github.com:broucz/react-inline-grid gh-pages --force",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
