@@ -1,10 +1,41 @@
 # [React Inline Grid](http://broucz.github.io/react-inline-grid)
 
-A simple grid system to play around [React](https://facebook.github.io/react/), [Redux](https://github.com/rackt/redux), [Immutable-js](http://facebook.github.io/immutable-js/).
+A simple grid system with inline style using [React](https://facebook.github.io/react/), [Redux](https://github.com/rackt/redux) and [Immutable-js](http://facebook.github.io/immutable-js/).
 
-Layout inspired by [Material Design Lite](http://www.getmdl.io/components/index.html#layout-section/grid).
+```js
+<Grid>
+  <Row>
+    <Cell>
+      <div>Hello world!</div>
+    </Cell>
+  </Row>
+</Grid>
+```
 
 [![npm version](https://img.shields.io/npm/v/react-inline-grid.svg?style=flat-square)](https://www.npmjs.com/package/react-inline-grid)
+
+## Install
+`npm install --save react-inline-grid`
+
+## API
+
+### Sample Usage
+
+```js
+let Layout = React.createClass({
+  render() {
+    return (
+      <Grid>
+        <Row>
+          <Cell>
+            <div>Hello world!</div>
+          </Cell>
+        </Row>
+      </Grid>
+    );
+  }
+});
+```
 
 ## Examples
 
