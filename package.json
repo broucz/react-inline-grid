@@ -9,6 +9,8 @@
     "build:lib": "babel src --out-dir lib",
     "build:umd": "webpack src/index.js dist/react-inline-grid.js --config webpack.config.development.js",
     "build:umd:min": "webpack src/index.js dist/react-inline-grid.min.js --config webpack.config.production.js",
+    "build:examples": "babel-node examples/buildAll.js",
+    "build:gh": "webpack -p --config examples/gh-pages/webpack.config.production.js && cp examples/gh-pages/index.html examples/gh-pages/dist/",
     "build": "npm run build:lib && npm run build:umd && npm run build:umd:min",
     "prepublish": "npm run clean && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
