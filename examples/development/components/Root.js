@@ -3,7 +3,7 @@ import { Grid, Row, Cell } from 'react-inline-grid';
 import { COLOR } from '../constants';
 import Box from './Box';
 
-const { gray } = COLOR;
+const { gray, primary } = COLOR;
 const options = [
   {
     name: 'desktop',

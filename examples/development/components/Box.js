@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 
 const STYLE_PROPS = {
   boxDefault: {
-    margin: '4px',
     color: 'white',
     paddingLeft: '8px',
     paddingTop: '4px'
