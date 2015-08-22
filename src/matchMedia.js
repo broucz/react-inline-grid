@@ -2,8 +2,7 @@ import { Seq, Map, OrderedSet } from 'immutable';
 
 class MatchMedia {
   constructor(options) {
-    this.listeners =
-      new OrderedSet;
+    this.listeners = new OrderedSet;
 
     this.state =
       new Seq(options)
@@ -11,9 +10,19 @@ class MatchMedia {
           const name = n.get('name');
           const MediaQueryList = window.matchMedia(n.get('query'));
 
-          MediaQueryList.onchange = event => {
+
+          // TODO:
+          // below `onchange` fail to fire event in FF & Safari, if someone know
+          // how to make it work, thanks to let me know.
+          //
+          //  MediaQueryList.onchange = event => {
+          //    this.updateCurrentMatch(name, event);
+          //  };
+
+          // `addListener` fix it.
+          MediaQueryList.addListener((event) => {
             this.updateCurrentMatch(name, event);
-          };
+          });
 
           return obj.setIn(['queries', name], MediaQueryList);
         }, new Map());
