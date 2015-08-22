@@ -121,10 +121,7 @@ Exposes the props `is` (string) to alterate the following default style object:
 
 ```js
 {
-  display: 'flex',
-  flexFlow: 'row wrap',
-  margin: '0 auto 0 auto',
-  alignItems: 'stretch'
+  boxSizing: 'border-box'
 }
 ```
 So far `is` can only specify cell size and `align-self` style property as:
