@@ -31,7 +31,7 @@ export default function grid(React) {
       name: PropTypes.string.isRequired,
       gutter: PropTypes.number,
       margin: PropTypes.number,
-      columns: PropTypes.number.isRequired,
+      columns: PropTypes.number,
       order: PropTypes.number.isRequired,
       query: PropTypes.string.isRequired
     })),

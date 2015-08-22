@@ -51,7 +51,7 @@ function fixUserAgent(userAgent, rowRoot) {
     justifyContent,
     alignSelf,
     UA_ROW
-  }
+  };
 }
 
 // TODO: this is not really readable and opti.
@@ -72,7 +72,7 @@ export default function generateStyle(options) {
       const name = screen.get('name');
       const gutter = screen.get('gutter') || 0;
       const margin = screen.get('margin') || 0;
-      const columns = screen.get('columns');
+      const columns = screen.get('columns') || 12;
 
       container
 
