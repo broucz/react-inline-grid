@@ -21,12 +21,51 @@ function fullSize(gutter) {
   return partialSize(1, 1, gutter);
 }
 
+// Add `-webkit` prefix when needed.
+function fixUserAgent(userAgent, rowRoot) {
+  const isWebKitNeeded =
+    userAgent.indexOf('Chrome') < 0
+    && userAgent.indexOf('Safari') > -1;
+
+  const justifyContent =
+    isWebKitNeeded
+      ? 'WebkitJustifyContent'
+      : 'justifyContent';
+
+  const alignSelf =
+    isWebKitNeeded
+      ? 'WebkitAlignSelf'
+      : 'alignSelf';
+
+  const UA_ROW =
+    isWebKitNeeded
+      ? rowRoot.withMutations(row => {
+        row
+          .set('display', '-webkit-flex')
+          .set('WebkitFlexFlow', 'row wrap')
+          .set('WebkitAlignItems', 'stretch'); // TODO: needed ?
+      })
+      : rowRoot;
+
+  return {
+    justifyContent,
+    alignSelf,
+    UA_ROW
+  }
+}
+
 // TODO: this is not really readable and opti.
 export default function generateStyle(options) {
   const initial = new Map();
 
   const bigger = options.maxBy(n => n.get('order'));
   const smaller = options.minBy(n => n.get('order'));
+
+  const {
+    justifyContent,
+    alignSelf,
+    UA_ROW
+  } = fixUserAgent(navigator.userAgent, ROW_ROOT);
 
   return initial.withMutations(container => {
     return options.map(screen => {
@@ -35,30 +74,32 @@ export default function generateStyle(options) {
       const margin = screen.get('margin') || 0;
       const columns = screen.get('columns');
 
-      // Define `row`
-      container.setIn([name, ROW], ROW_ROOT);
-      container.setIn([name, ROW, 'padding'], `${margin - (gutter / 2)}px`);
+      container
 
-      // Define `cell`
-      container.setIn([name, CELL], CELL_ROOT);
-      container.setIn([name, CELL, 'margin'], `${gutter / 2}px`);
-      container.setIn(
-        [name, CELL, 'width'],
-        partialSize(smaller.get('columns'), columns, gutter)
-      );
+        // Define `row`
+        .setIn([name, ROW], UA_ROW)
+        .setIn([name, ROW, 'padding'], `${margin - (gutter / 2)}px`)
 
-      // ROW
-      container.setIn([name, 'start', 'justifyContent'], `flex-start`);
-      container.setIn([name, 'center', 'justifyContent'], `center`);
-      container.setIn([name, 'end', 'justifyContent'], `flex-end`);
-      container.setIn([name, 'around', 'justifyContent'], `space-around`);
-      container.setIn([name, 'between', 'justifyContent'], `space-between`);
+        // Define `cell`
+        .setIn([name, CELL], CELL_ROOT)
+        .setIn([name, CELL, 'margin'], `${gutter / 2}px`)
+        .setIn(
+          [name, CELL, 'width'],
+          partialSize(smaller.get('columns'), columns, gutter)
+        )
 
-      // CELL
-      container.setIn([name, 'top', 'alignSelf'], `flex-start`);
-      container.setIn([name, 'middle', 'alignSelf'], `center`);
-      container.setIn([name, 'bottom', 'alignSelf'], `flex-end`);
-      container.setIn([name, 'stretch', 'alignSelf'], `stretch`);
+        // ROW
+        .setIn([name, 'start', justifyContent], `flex-start`)
+        .setIn([name, 'center', justifyContent], `center`)
+        .setIn([name, 'end', justifyContent], `flex-end`)
+        .setIn([name, 'around', justifyContent], `space-around`)
+        .setIn([name, 'between', justifyContent], `space-between`)
+
+        // CELL
+        .setIn([name, 'top', alignSelf], `flex-start`)
+        .setIn([name, 'middle', alignSelf], `center`)
+        .setIn([name, 'bottom', alignSelf], `flex-end`)
+        .setIn([name, 'stretch', alignSelf], `stretch`);
 
 
       // Define partial sizes for columnNumber < totalColumns.
