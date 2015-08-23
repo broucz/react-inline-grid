@@ -11,13 +11,7 @@ class Distribution extends Component {
       <div>
         <Row>
           <Cell is="12">
-            <div className="mdl-typography--display-1 mdl-color-text--grey-600">Distribution</div>
-          </Cell>
-        </Row>
-
-        <Row>
-          <Cell is="12">
-            <div className="mdl-typography--title mdl-color-text--grey-600">around</div>
+            <h3>Distribution</h3>
           </Cell>
         </Row>
         <Row>
@@ -29,12 +23,6 @@ class Distribution extends Component {
                 <Cell is="2 phone-1"><Box color={primary}/></Cell>
               </Row>
             </div>
-          </Cell>
-        </Row>
-
-        <Row>
-          <Cell is="12">
-            <div className="mdl-typography--title mdl-color-text--grey-600">between</div>
           </Cell>
         </Row>
         <Row>

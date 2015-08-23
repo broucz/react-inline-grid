@@ -11,13 +11,7 @@ class Alignments extends Component {
       <div>
         <Row>
           <Cell is="12">
-            <div className="mdl-typography--display-1 mdl-color-text--grey-600">Alignments</div>
-          </Cell>
-        </Row>
-
-        <Row>
-          <Cell is="12">
-            <div className="mdl-typography--title mdl-color-text--grey-600">Row</div>
+            <h3>Alignments</h3>
           </Cell>
         </Row>
         <Row>
@@ -51,12 +45,6 @@ class Alignments extends Component {
                 </Cell>
               </Row>
             </div>
-          </Cell>
-        </Row>
-
-        <Row>
-          <Cell is="12">
-            <div className="mdl-typography--title mdl-color-text--grey-600">Cell</div>
           </Cell>
         </Row>
         <Row>

@@ -24,11 +24,8 @@ config.module = {
     loaders: ['babel-loader'],
     exclude: /node_modules/
   }, {
-    test: /\.scss$/,
-    loader: 'style!css!sass',
-    include: [
-      path.join(__dirname, 'styles')
-    ]
+    test: /\.css$/,
+    loaders: [ 'style-loader', 'css-loader' ]
   }]
 };
 

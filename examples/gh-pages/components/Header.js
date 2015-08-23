@@ -4,9 +4,9 @@ import { Row, Cell } from 'react-inline-grid';
 class Header extends Component {
   render() {
     return (
-      <Row is="around">
+      <Row>
         <Cell is="12">
-          <h3 className="mdl-typography--display-2 mdl-color-text--grey-600">react-inline-grid</h3>
+          <h1>react-inline-grid</h1>
         </Cell>
       </Row>
     );

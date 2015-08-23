@@ -11,8 +11,7 @@ module.exports = {
   resolve: {
     alias: {
       'react-inline-grid': path.join(__dirname, '..', '..', 'src'),
-      'react': path.resolve(__dirname, 'node_modules', 'react'),
-      'styles': path.join(__dirname, 'styles')
+      'react': path.resolve(__dirname, 'node_modules', 'react')
     },
     extensions: ['', '.js', '.scss']
   }
