@@ -137,7 +137,7 @@ So far `is` can only specify cell size and `align-self` style property as:
 
 ## Examples
 
-The [demo](http://broucz.github.io/react-inline-grid/) page of this repository use some patterns as examples, but feel free to play and test your layouts using the `examples` folder!
+The [gh-pages](http://broucz.github.io/react-inline-grid/) page of this repository use some patterns as examples, but feel free to play and test your layouts using the `examples` folder.
 
 **To run any of them, clone the repo and run `npm install` both in the root and the example folder.**
 
@@ -155,3 +155,13 @@ npm install
 npm start
 open http://localhost:3000/
 ```
+
+## Production ready ?
+
+No dude !
+
+I published this package after few days of fun with React, Redux and Immutable-js during my free time. I was looking for an inline grid solution for some other React related project, without success. And even if I keep on using a classic CSS solution, I thought that it could be intresting to test these libraries with this kind of project. Grid system combine usability, performance needs, and have to be updated following the context.
+
+Currently in v0.1.x, I still have to done a lot before thinking about using it in production. Styles properties wasn't my first concern so far, context handling is minimal, and moreover, you'll not able to find any tests in this repository \o/ !
+
+Time missing... but I'll continue working on it in the coming days.
