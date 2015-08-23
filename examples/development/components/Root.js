@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Grid, Row, Cell } from 'react-inline-grid';
-import { COLOR } from '../constants';
-import Box from './Box';
 
-const { gray, primary } = COLOR;
+const box = { background: '#bdbdbd', padding: '8px' };
 const options = [
   {
     name: 'desktop',
@@ -34,13 +32,15 @@ const options = [
 class Root extends Component {
   render() {
     return (
-      <Grid options={options}>
-        <Row is="center">
-          <Cell is="11 tablet-4 phone-4">
-            <Box size="big" color={gray}/>
-          </Cell>
-        </Row>
-      </Grid>
+      <div>
+        <Grid options={options}>
+          <Row>
+            <Cell>
+              <div style={{...box}}></div>
+            </Cell>
+          </Row>
+        </Grid>
+      </div>
     );
   }
 }
