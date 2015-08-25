@@ -5,11 +5,7 @@ import generateList from '../utils/generateList';
 import generatePayload from '../utils/generatePayload';
 import invariant from '../utils/invariant';
 import capitalize from '../utils/capitalize';
-import {
-  ROW, PAYLOAD_LIST,
-  ROW_WHITE_LIST,
-  CELL_WHITE_LIST
-} from '../constants';
+import { PAYLOAD_LIST } from '../constants';
 
 function mapStateToProps(state, ownProps) {
   const { is } = ownProps;

@@ -5,7 +5,7 @@ describe('Utils', () => {
   describe('invariant', () => {
     it(`should throw if !<condition>`, () => {
       expect(() => {
-        invariant(false, 'error text')
+        invariant(false, 'error text');
       }).toThrow('error text');
     });
   });
