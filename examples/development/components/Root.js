@@ -34,8 +34,8 @@ class Root extends Component {
     return (
       <div>
         <Grid options={options}>
-          <Row>
-            <Cell>
+          <Row is="center">
+            <Cell is="6">
               <div style={{...box}}></div>
             </Cell>
           </Row>
