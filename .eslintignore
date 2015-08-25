@@ -1,6 +1,7 @@
 lib
 dist
 node_modules
+coverage
 examples/buildAll.js
 examples/development/node_modules
 examples/development/webpack.server.js
