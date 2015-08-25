@@ -10,6 +10,6 @@ export default function store(options) {
     combineReducers(reducers),
     {
       context: hydrateContext(options, isMatching),
-      reference: hydrateReference(options, isWebKitNeeded)
+      reference: hydrateReference(options, isWebKitNeeded(navigator.userAgent))
     });
 }
