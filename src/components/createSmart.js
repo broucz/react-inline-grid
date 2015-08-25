@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import createDumb from './createDumb';
 import generateList from '../utils/generateList';
 import generatePayload from '../utils/generatePayload';
-import { SCREEN } from '../constants';
 
 function mapStateToProps(state, ownProps) {
   const { is } = ownProps;
@@ -35,7 +34,7 @@ export default function createSmart(React, tag) {
       const { grid, ...clean } = this.props;
       const { reference } = grid;
       const list = generateList(tag, grid.is);
-      const payload = generatePayload(list, grid.context.get(SCREEN));
+      const payload = generatePayload(grid.context, list);
 
       return <Dumb grid={{ payload, reference }} {...clean}/>;
     }

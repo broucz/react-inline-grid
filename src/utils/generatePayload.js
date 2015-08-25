@@ -1,37 +1,50 @@
 import { OrderedSet, Seq, Map } from 'immutable';
-import { PAYLOAD_SCREEN, PAYLOAD_LIST } from '../constants';
+import { SCREEN, PAYLOAD_CONTEXT, PAYLOAD_LIST } from '../constants';
 
-/**
- * list = List['col', '2', 'middle', 'desktop-6', 'tablet-4']
- * current = 'phone'
- *
- * output = OrderedSet['col', 'middle', ['phone', '2']]
- */
-function reduceList(list, screen) {
+function reduceList(context, list) {
+  const screen = context.get(SCREEN);
+
   const payload = new Seq(list)
-    .reduce((obj, n) => {
+    .reduce((acc, n) => {
       const [ entry, ...value ] = n.split('-');
 
       switch (value.length) {
       case 0:
-        if (isNaN(entry)) {
-          return obj.add(entry);
-        }
-        return obj.add([screen, entry]);
+        return acc.add([screen, entry]);
       case 1:
-        if (entry !== screen) return obj;
-        return obj.add([entry, ...value]);
+        if (entry !== screen) return acc;
+        return acc.add([entry, ...value]);
       default:
-        return obj;
+        return acc;
       }
     }, new OrderedSet);
 
   return payload;
 }
 
-export default function generatePayload(list, screen) {
+/**
+ * Return an Immutable Map containing `current` screen `name`
+ * as first value and global (as named) or named and matching value(s).
+ *
+ * context = Map{ screen: 'phone' }
+ * list = List['cell', 'middle', 'tablet-3', 'phone-2']
+ *
+ * return Map{
+ *  context: Map{ screen: 'phone' },
+ *  list: List[
+ *    ['phone', 'cell'],
+ *    ['phone', 'middle'],
+ *    ['phone', '2']
+ *  ]
+ * }
+ *
+ * @param {Map} context
+ * @param {List} list
+ * @returns {Map}
+ */
+export default function generatePayload(context, list) {
   return new Map({
-    [PAYLOAD_SCREEN]: screen,
-    [PAYLOAD_LIST]: reduceList(list, screen)
+    [PAYLOAD_CONTEXT]: context,
+    [PAYLOAD_LIST]: reduceList(context, list)
   });
 }
