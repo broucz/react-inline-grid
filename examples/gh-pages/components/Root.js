@@ -4,6 +4,7 @@ import Header from './Header';
 import Intro from './Intro';
 import Alignments from './Alignments';
 import Distribution from './Distribution';
+import Spacing from './Spacing';
 
 class Root extends Component {
   render() {
@@ -15,6 +16,7 @@ class Root extends Component {
             <Intro/>
             <Alignments/>
             <Distribution/>
+            <Spacing/>
           </Cell>
         </Row>
       </Grid>

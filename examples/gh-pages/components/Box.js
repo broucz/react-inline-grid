@@ -19,14 +19,15 @@ class Box extends Component {
     const boxStyle =
       STYLE_PROPS[size]
       || STYLE_PROPS.box;
+    const background = { background: color };
     return (
-      <div style={{ ...boxDefault, ...boxStyle, ...color }}></div>
+      <div style={{ ...boxDefault, ...boxStyle, ...background }}></div>
     );
   }
 }
 
 Box.propTypes = {
-  color: PropTypes.object,
+  color: PropTypes.string,
   size: PropTypes.string
 };
 

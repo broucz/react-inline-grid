@@ -6,7 +6,7 @@ class Header extends Component {
     return (
       <Row>
         <Cell is="12">
-          <h1>react-inline-grid</h1>
+          <h1 style={{color: '#333'}}>react-inline-grid</h1>
         </Cell>
       </Row>
     );

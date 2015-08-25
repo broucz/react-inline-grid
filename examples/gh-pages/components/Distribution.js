@@ -5,42 +5,41 @@ import { COLOR } from '../constants';
 import Box from './Box';
 
 const { gray, primary } = COLOR;
-const str = `<Row>
-  <Cell is="12">
-    <div style={gray}>
-      <Row is="around">
-        <Cell is="2 phone-1"><Box color={primary}/></Cell>
-        <Cell is="2 phone-1"><Box color={primary}/></Cell>
-        <Cell is="2 phone-1"><Box color={primary}/></Cell>
-      </Row>
-    </div>
-  </Cell>
+
+const strAround = `<Cell> are positioned with space before && between && and after.
+`;
+
+const strBetween = `<Cell> are positioned with space between.
+`;
+
+const str1 = `<Row is="around">
+  <Cell is="2 phone-1"><Box color={blue}/></Cell>
+  <Cell is="2 phone-1"><Box color={blue}/></Cell>
+  <Cell is="2 phone-1"><Box color={blue}/></Cell>
 </Row>
-<Row>
-  <Cell is="12">
-    <div style={gray}>
-      <Row is="between">
-        <Cell is="2 phone-1"><Box color={primary}/></Cell>
-        <Cell is="2 phone-1"><Box color={primary}/></Cell>
-        <Cell is="2 phone-1"><Box color={primary}/></Cell>
-      </Row>
-    </div>
-  </Cell>
+`;
+
+const str2 = `<Row is="between">
+  <Cell is="2 phone-1"><Box color={blue}/></Cell>
+  <Cell is="2 phone-1"><Box color={blue}/></Cell>
+  <Cell is="2 phone-1"><Box color={blue}/></Cell>
 </Row>
 `;
 
 class Distribution extends Component {
   render() {
     return (
-      <div>
+      <div style={{marginTop: '4em'}}>
         <Row>
           <Cell is="12">
-            <h3>Distribution</h3>
+            <h2>Distribution</h2>
+            <h4 style={{marginTop: '3em'}}>Around</h4>
+            <Code embed={strAround} />
           </Cell>
         </Row>
         <Row>
           <Cell is="12">
-            <div style={gray}>
+            <div style={{background: gray}}>
               <Row is="around">
                 <Cell is="2 phone-1"><Box color={primary}/></Cell>
                 <Cell is="2 phone-1"><Box color={primary}/></Cell>
@@ -49,9 +48,18 @@ class Distribution extends Component {
             </div>
           </Cell>
         </Row>
+
         <Row>
           <Cell is="12">
-            <div style={gray}>
+            <Code embed={str1} />
+            <h4 style={{marginTop: '3em'}}>Between</h4>
+            <Code embed={strBetween} />
+          </Cell>
+        </Row>
+
+        <Row>
+          <Cell is="12">
+            <div style={{background: gray}}>
               <Row is="between">
                 <Cell is="2 phone-1"><Box color={primary}/></Cell>
                 <Cell is="2 phone-1"><Box color={primary}/></Cell>
@@ -62,7 +70,7 @@ class Distribution extends Component {
         </Row>
         <Row>
           <Cell is="12">
-            <Code embed={str} />
+            <Code embed={str2} />
           </Cell>
         </Row>
       </div>
