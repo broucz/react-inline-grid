@@ -1,11 +1,11 @@
 # [React Inline Grid](http://broucz.github.io/react-inline-grid)
 
-**A simplified and predictable inline grid for laying out content in [React](https://facebook.github.io/react/) applications, using [Redux](https://github.com/rackt/redux) and [Immutable-js](http://facebook.github.io/immutable-js/).**
+**A simplified and predictable inline grid for laying out content in [React](https://facebook.github.io/react/) applications, using [Redux](https://github.com/rackt/redux) and [Immutable-js](http://facebook.github.io/immutable-js/). ([demo](http://broucz.github.io/react-inline-grid))**
 
 ```js
 <Grid>
   <Row>
-    <Cell>
+    <Cell is="12">
       <div> Hello world! </div>
     </Cell>
   </Row>
@@ -22,6 +22,8 @@
 ### Sample Usage
 
 ```js
+import React from 'react';
+import ReactDOM from 'react-dom';
 import { Grid, Row, Cell } from 'react-inline-grid';
 
 const box = { background: '#bdbdbd', padding: '8px' };
@@ -40,6 +42,8 @@ const Layout = React.createClass({
     );
   }
 });
+
+ReactDOM.render(<Layout />, document.body);
 ```
 The library exports `Grid`, `Row` and `Cell`.
 
@@ -100,11 +104,10 @@ Exposes the props `is` (string) to alterate the following default style object:
 {
   display: 'flex',
   flexFlow: 'row wrap',
-  margin: '0 auto 0 auto',
   alignItems: 'stretch'
 }
 ```
-So far `is` can only specify `justify-content` style property as:
+`is` specify the `justify-content` style property as:
 - `start`
 - `center`
 - `end`
@@ -112,7 +115,11 @@ So far `is` can only specify `justify-content` style property as:
 - `between`
 
 ```js
-<Row is="center">{...}</Row>
+<Row is="center">
+  <Cell>
+    <div>Content</div>
+  </Cell>
+</Row>
 ```
 
 ### &lt;Cell />
@@ -124,7 +131,7 @@ Exposes the props `is` (string) to alterate the following default style object:
   boxSizing: 'border-box'
 }
 ```
-So far `is` can only specify cell size and `align-self` style property as:
+`is` specify cell size and `align-self` style property as:
 - `<screen name>-<value>` || `<value>`
 - `top`
 - `middle`
@@ -132,14 +139,19 @@ So far `is` can only specify cell size and `align-self` style property as:
 - `stretch`
 
 ```js
-<Cell is="middle 4 tablet-8">{...}</Cell>
+<Row>
+  <Cell is="middle 4 tablet-2">
+    <div>Content</div>
+  </Cell>
+</Row>
 ```
+## Context
+
+TODO when really used.
 
 ## Examples
 
 The [gh-pages](http://broucz.github.io/react-inline-grid/) page of this repository use some patterns as examples, but feel free to play and test your layouts using the `examples` folder.
-
-**To run any of them, clone the repo and run `npm install` both in the root and the example folder.**
 
 Run the gh-pages example:
 
@@ -160,8 +172,15 @@ open http://localhost:3000/
 
 No dude !
 
-I published this package after few days of fun with React, Redux and Immutable-js during my free time. I was looking for an inline grid solution for some other React related project, without success. And even if I keep on using a classic CSS solution, I thought that it could be intresting to test these libraries with this kind of project. Grid system combine usability, performance needs, and have to be updated following the context.
+I published this package after few days of fun with React, Redux and Immutable-js during my free time. I was looking for an inline grid solution for some other React related project, without _real_ success. And even if I keep on using a classic CSS solution, I thought that it could be intresting to test these libraries with this kind of project. Grid system combine usability, performance needs, and react to context.
 
-Currently in v0.1.x, I still have to done a lot before thinking about using it in production. Styles properties wasn't my first concern so far, context handling is minimal, and moreover, you'll not able to find any tests in this repository \o/ !
+Currently in v0.2.x, I still have to done a lot before thinking about using it in production. Styles properties wasn't my first concern so far, context handling is minimal, and moreover, the library is far to be fully covered.
 
-Time missing... but I'll continue working on it in the coming days.
+Time missing... but I'll continue working on it in the coming days :coffee:.
+
+## Thanks
+
+* [Redux](https://github.com/rackt/redux) I learned a lot from package evolution, author [@gaearon](https://github.com/gaearon), contributors, and related discussions.
+* [Immutable-js](http://facebook.github.io/immutable-js/) for the feeling of being safe.
+* [React]() for the fun.
+* [React Redux](https://github.com/rackt/react-redux) to make it easier.
