@@ -19,7 +19,7 @@ export default function createDumb(React) {
       const result = reducePayload(grid.payload, grid.reference);
 
       return (
-        <div style={result.toJS()}>
+        <div style={result.toObject()}>
           {Children.map(children, child => {
             return cloneElement(child, {...clean});
           })}
