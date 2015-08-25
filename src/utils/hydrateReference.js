@@ -16,17 +16,12 @@ const CELL_ROOT = new Map({
 function partialSize(size, columns, gutter) {
   return `calc(${(size / columns) * 100}% - ${gutter}px)`;
 }
-
 function fullSize(gutter) {
   return partialSize(1, 1, gutter);
 }
 
 // Add `-webkit` prefix when needed.
-function fixUserAgent(userAgent, rowRoot) {
-  const isWebKitNeeded =
-    userAgent.indexOf('Chrome') < 0
-    && userAgent.indexOf('Safari') > -1;
-
+function fixUserAgent(isWebKitNeeded, rowRoot) {
   const justifyContent =
     isWebKitNeeded
       ? 'WebkitJustifyContent'
@@ -43,7 +38,7 @@ function fixUserAgent(userAgent, rowRoot) {
         row
           .set('display', '-webkit-flex')
           .set('WebkitFlexFlow', 'row wrap')
-          .set('WebkitAlignItems', 'stretch'); // TODO: needed ?
+          .set('WebkitAlignItems', 'stretch');
       })
       : rowRoot;
 
@@ -54,8 +49,7 @@ function fixUserAgent(userAgent, rowRoot) {
   };
 }
 
-// TODO: this is not really readable and opti.
-export default function generateStyle(options) {
+export default function hydrateReference(options, isWebKitNeeded) {
   const initial = new Map();
 
   const bigger = options.maxBy(n => n.get('order'));
@@ -65,10 +59,10 @@ export default function generateStyle(options) {
     justifyContent,
     alignSelf,
     UA_ROW
-  } = fixUserAgent(navigator.userAgent, ROW_ROOT);
+    } = fixUserAgent(isWebKitNeeded, ROW_ROOT);
 
   return initial.withMutations(container => {
-    return options.map(screen => {
+    options.forEach(screen => {
       const name = screen.get('name');
       const gutter = screen.get('gutter') || 0;
       const margin = screen.get('margin') || 0;
@@ -100,7 +94,6 @@ export default function generateStyle(options) {
         .setIn([name, 'middle', alignSelf], `center`)
         .setIn([name, 'bottom', alignSelf], `flex-end`)
         .setIn([name, 'stretch', alignSelf], `stretch`);
-
 
       // Define partial sizes for columnNumber < totalColumns.
       new Range(1, columns)
