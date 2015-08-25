@@ -10,10 +10,10 @@ function reduceList(context, list) {
 
       switch (value.length) {
       case 0:
-        return acc.add([screen, entry]);
+        return acc.add(entry);
       case 1:
         if (entry !== screen) return acc;
-        return acc.add([entry, ...value]);
+        return acc.add(...value);
       default:
         return acc;
       }
@@ -32,9 +32,9 @@ function reduceList(context, list) {
  * return Map{
  *  context: Map{ screen: 'phone' },
  *  list: List[
- *    ['phone', 'cell'],
- *    ['phone', 'middle'],
- *    ['phone', '2']
+ *    'cell',
+ *    'middle',
+ *    '2'
  *  ]
  * }
  *

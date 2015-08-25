@@ -23,9 +23,9 @@ describe('Utils', () => {
       const l = List.of('a', 'b', 'c');
       const expected =
         new OrderedSet()
-          .add(['phone', 'a'])
-          .add(['phone', 'b'])
-          .add(['phone', 'c']);
+          .add('a')
+          .add('b')
+          .add('c');
       const v = generatePayload(context, l);
       expect(v.get(PAYLOAD_LIST).toArray()).toEqual(expected.toArray());
     });
@@ -34,8 +34,8 @@ describe('Utils', () => {
       const l = List.of('a', 'phone-b', 'fail-c');
       const expected =
         new OrderedSet()
-          .add(['phone', 'a'])
-          .add(['phone', 'b']);
+          .add('a')
+          .add('b');
       const v = generatePayload(context, l);
       expect(v.get(PAYLOAD_LIST).toArray()).toEqual(expected.toArray());
     });
@@ -44,8 +44,8 @@ describe('Utils', () => {
       const l = List.of('a', 'b', 'phone-c-fail');
       const expected =
         new OrderedSet()
-          .add(['phone', 'a'])
-          .add(['phone', 'b']);
+          .add('a')
+          .add('b');
       const v = generatePayload(context, l);
       expect(v.get(PAYLOAD_LIST).toArray()).toEqual(expected.toArray());
     });

@@ -1,15 +1,16 @@
 import { OrderedSet, Map } from 'immutable';
 import expect from 'expect';
 import reducePayload from '../../src/utils/reducePayload';
-import { PAYLOAD_LIST } from '../../src/constants';
+import { PAYLOAD_CONTEXT, SCREEN, PAYLOAD_LIST } from '../../src/constants';
 
 const payload =
   new Map({
+    [PAYLOAD_CONTEXT]: new Map({ [SCREEN]: 'phone'}),
     [PAYLOAD_LIST]:
       new OrderedSet()
-        .add(['phone', '2'])
-        .add(['phone', 'cell'])
-        .add(['phone', 'middle'])
+        .add('2')
+        .add('cell')
+        .add('middle')
   });
 
 const initial = new Map();
