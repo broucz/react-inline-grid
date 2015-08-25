@@ -1,16 +1,13 @@
-import { Map, Range } from 'immutable';
-import { ROW, CELL } from '../constants';
-
-const ROW_ROOT = new Map({
-  display: 'flex',
-  flexFlow: 'row wrap',
-  margin: '0 auto 0 auto',
-  alignItems: 'stretch'
-});
-
-const CELL_ROOT = new Map({
-  boxSizing: 'border-box'
-});
+import { Map, List, Range } from 'immutable';
+import fixUserAgent from './fixUserAgent';
+import {
+  ROW,
+  CELL,
+  ROW_WHITE_LIST,
+  CELL_WHITE_LIST,
+  ROW_ROOT,
+  CELL_ROOT
+} from '../constants';
 
 // Mixins for width calculation.
 function partialSize(size, columns, gutter) {
@@ -18,35 +15,6 @@ function partialSize(size, columns, gutter) {
 }
 function fullSize(gutter) {
   return partialSize(1, 1, gutter);
-}
-
-// Add `-webkit` prefix when needed.
-function fixUserAgent(isWebKitNeeded, rowRoot) {
-  const justifyContent =
-    isWebKitNeeded
-      ? 'WebkitJustifyContent'
-      : 'justifyContent';
-
-  const alignSelf =
-    isWebKitNeeded
-      ? 'WebkitAlignSelf'
-      : 'alignSelf';
-
-  const UA_ROW =
-    isWebKitNeeded
-      ? rowRoot.withMutations(row => {
-        row
-          .set('display', '-webkit-flex')
-          .set('WebkitFlexFlow', 'row wrap')
-          .set('WebkitAlignItems', 'stretch');
-      })
-      : rowRoot;
-
-  return {
-    justifyContent,
-    alignSelf,
-    UA_ROW
-  };
 }
 
 export default function hydrateReference(options, isWebKitNeeded) {
@@ -62,6 +30,38 @@ export default function hydrateReference(options, isWebKitNeeded) {
     } = fixUserAgent(isWebKitNeeded, ROW_ROOT);
 
   return initial.withMutations(container => {
+    container
+      .setIn([ROW_WHITE_LIST], List.of(
+        'row',
+        'start',
+        'center',
+        'end',
+        'around',
+        'between',
+        'nospace'
+      ))
+      .setIn([CELL_WHITE_LIST], List.of(
+        'cell',
+        '1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10',
+        '11',
+        '12',
+        'top',
+        'middle',
+        'bottom',
+        'stretch',
+        'between',
+        'nospace'
+      ));
+
     options.forEach(screen => {
       const name = screen.get('name');
       const gutter = screen.get('gutter') || 0;
@@ -81,6 +81,9 @@ export default function hydrateReference(options, isWebKitNeeded) {
           [name, CELL, 'width'],
           partialSize(smaller.get('columns'), columns, gutter)
         )
+
+        // COMMON
+        .setIn([name, 'nospace'], {padding: 0, margin: 0})
 
         // ROW
         .setIn([name, 'start', justifyContent], `flex-start`)

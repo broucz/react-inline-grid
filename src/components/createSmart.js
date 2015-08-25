@@ -3,6 +3,13 @@ import { connect } from 'react-redux';
 import createDumb from './createDumb';
 import generateList from '../utils/generateList';
 import generatePayload from '../utils/generatePayload';
+import invariant from '../utils/invariant';
+import capitalize from '../utils/capitalize';
+import {
+  ROW, PAYLOAD_LIST,
+  ROW_WHITE_LIST,
+  CELL_WHITE_LIST
+} from '../constants';
 
 function mapStateToProps(state, ownProps) {
   const { is } = ownProps;
@@ -35,6 +42,15 @@ export default function createSmart(React, tag) {
       const { reference } = grid;
       const list = generateList(tag, grid.is);
       const payload = generatePayload(grid.context, list);
+      const whitelist =
+        grid.reference.get(`${tag.toUpperCase()}_WHITE_LIST`);
+
+      payload.get(PAYLOAD_LIST).forEach(n => {
+        invariant(
+          whitelist.includes(n),
+          `Property '${n}' is not allowed for <${capitalize(tag)}> component.`
+        );
+      });
 
       return <Dumb grid={{ payload, reference }} {...clean}/>;
     }
