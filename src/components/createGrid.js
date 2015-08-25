@@ -15,12 +15,10 @@ export default function grid(React) {
 
       return (
         <Provider store={store(fromJS(o))}>
-          {() =>
-            <div>
-              <Context options={o} {...clean}/>
-              {children}
-            </div>
-          }
+          <div>
+            <Context options={o} {...clean}/>
+            {children}
+          </div>
         </Provider>
       );
     }
