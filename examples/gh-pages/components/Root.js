@@ -3,6 +3,7 @@ import { Grid, Row, Cell } from 'react-inline-grid';
 import Header from './Header';
 import Intro from './Intro';
 import Alignments from './Alignments';
+import Offset from './Offset';
 import Distribution from './Distribution';
 import Spacing from './Spacing';
 
@@ -15,6 +16,7 @@ class Root extends Component {
             <Header/>
             <Intro/>
             <Alignments/>
+            <Offset/>
             <Distribution/>
             <Spacing/>
           </Cell>
