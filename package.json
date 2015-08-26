@@ -2,7 +2,7 @@
   "name": "react-inline-grid",
   "description": "Predictable flexbox based grid for React.",
   "main": "./lib/index.js",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "scripts": {
     "clean": "rimraf lib dist coverage",
     "lint": "eslint src test examples",
