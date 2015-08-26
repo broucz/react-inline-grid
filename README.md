@@ -132,7 +132,8 @@ Exposes the props `is` (string) to alterate the following default style object:
 }
 ```
 `is` specify cell size and `align-self` style property as:
-- `<screen name>-<value>` || `<value>`
+- `<screen name?>-<value>`
+- `<screen name?>-offset-<value>`
 - `top`
 - `middle`
 - `bottom`
@@ -140,7 +141,7 @@ Exposes the props `is` (string) to alterate the following default style object:
 
 ```js
 <Row>
-  <Cell is="middle 4 tablet-2">
+  <Cell is="middle 4 tablet-2 offset-1">
     <div>Content</div>
   </Cell>
 </Row>
@@ -167,16 +168,6 @@ npm install
 npm start
 open http://localhost:3000/
 ```
-
-## Production ready ?
-
-No dude !
-
-I published this package after few days of fun with React, Redux and Immutable-js during my free time. I was looking for an inline grid solution for some other React related project, without _real_ success. And even if I keep on using a classic CSS solution, I thought that it could be intresting to test these libraries with this kind of project. Grid system combine usability, performance needs, and react to context.
-
-Currently in v0.2.x, I still have to done a lot before thinking about using it in production. Styles properties wasn't my first concern so far, context handling is minimal, and moreover, the library is far to be fully covered.
-
-Time missing... but I'll continue working on it in the coming days :coffee:.
 
 ## Thanks
 
