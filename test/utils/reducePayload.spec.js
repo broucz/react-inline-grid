@@ -11,6 +11,7 @@ const payload =
         .add('2')
         .add('cell')
         .add('middle')
+        .add(['offset', '1'])
   });
 
 const initial = new Map();
@@ -20,7 +21,8 @@ const reference =
     container
       .setIn(['phone', '2'], { a: 'A'})
       .setIn(['phone', 'cell'], { b: 'B' })
-      .setIn(['phone', 'middle'], { c: 'C' });
+      .setIn(['phone', 'middle'], { c: 'C' })
+      .setIn(['phone', 'offset', '1'], { d: 'D' });
   });
 
 describe('Utils', () => {
@@ -31,7 +33,8 @@ describe('Utils', () => {
         new Map()
           .set('a', 'A')
           .set('b', 'B')
-          .set('c', 'C');
+          .set('c', 'C')
+          .set('d', 'D');
       expect(v.toArray()).toEqual(expected.toArray());
     });
   });

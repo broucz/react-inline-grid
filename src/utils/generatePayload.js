@@ -12,8 +12,17 @@ function reduceList(context, list) {
       case 0:
         return acc.add(entry);
       case 1:
+        if (entry === 'offset') {
+          return acc.add([entry, ...value]);
+        }
         if (entry !== screen) return acc;
         return acc.add(...value);
+      case 2:
+        if (entry !== screen) return acc;
+        if (value[0] === 'offset') {
+          return acc.add(value);
+        }
+        return acc;
       default:
         return acc;
       }

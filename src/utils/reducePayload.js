@@ -7,6 +7,6 @@ export default function reducePayload(payload, reference) {
 
   return new Seq(list)
     .reduce((obj, n) => {
-      return obj.merge(reference.getIn([screen, n]));
+      return obj.merge(reference.getIn([screen, ...n]));
     }, new Map);
 }

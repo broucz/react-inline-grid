@@ -9,12 +9,15 @@ import {
   CELL_ROOT
 } from '../constants';
 
-// Mixins for width calculation.
+// Mixins for width and offset calculation.
 function partialSize(size, columns, gutter) {
   return `calc(${(size / columns) * 100}% - ${gutter}px)`;
 }
 function fullSize(gutter) {
   return partialSize(1, 1, gutter);
+}
+function offsetSize(size, columns, gutter) {
+  return `calc(${(size / columns) * 100}% + ${gutter / 2}px)`;
 }
 
 export default function hydrateReference(options, isWebKitNeeded) {
@@ -59,6 +62,7 @@ export default function hydrateReference(options, isWebKitNeeded) {
         'bottom',
         'stretch',
         'between',
+        'offset',
         'nospace'
       ));
 
@@ -115,6 +119,16 @@ export default function hydrateReference(options, isWebKitNeeded) {
           container.setIn(
             [name, `${n}`, 'width'],
             fullSize(gutter)
+          );
+        });
+
+      // Define offset sizes.
+      new Range(0, columns)
+        .toArray()
+        .map(n => {
+          container.setIn(
+            [name, 'offset', `${n}`, `marginLeft`],
+            offsetSize(n, columns, gutter)
           );
         });
     });

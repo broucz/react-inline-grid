@@ -42,9 +42,10 @@ export default function createSmart(React, tag) {
         grid.reference.get(`${tag.toUpperCase()}_WHITE_LIST`);
 
       payload.get(PAYLOAD_LIST).forEach(n => {
+        const value = (Array.isArray(n)) ? n[0] : n;
         invariant(
-          whitelist.includes(n),
-          `Property '${n}' is not allowed for <${capitalize(tag)}> component.`
+          whitelist.includes(value),
+          `Property '${value}' is not allowed for <${capitalize(tag)}> component.`
         );
       });
 
