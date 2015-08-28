@@ -6,7 +6,7 @@ import Box from './Box';
 
 const { gray, primary } = COLOR;
 
-const str = `Predictable flexbox based grid for React using Redux and Immutable-js.
+const str = `Predictable flexbox based grid for React using Redux.
 `;
 
 class Intro extends Component {

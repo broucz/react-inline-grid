@@ -1,6 +1,6 @@
 # [React Inline Grid](http://broucz.github.io/react-inline-grid)
 
-**A simplified and predictable inline grid for laying out content in [React](https://facebook.github.io/react/) applications, using [Redux](https://github.com/rackt/redux) and [Immutable-js](http://facebook.github.io/immutable-js/). ([demo](http://broucz.github.io/react-inline-grid))**
+**A simplified and predictable inline grid for laying out content in [React](https://facebook.github.io/react/) applications using [Redux](https://github.com/rackt/redux). ([demo](http://broucz.github.io/react-inline-grid))**
 
 ```js
 <Grid>
@@ -172,6 +172,5 @@ open http://localhost:3000/
 ## Thanks
 
 * [Redux](https://github.com/rackt/redux) I learned a lot from package evolution, author [@gaearon](https://github.com/gaearon), contributors, and related discussions.
-* [Immutable-js](http://facebook.github.io/immutable-js/) for the feeling of being safe.
-* [React]() for the fun.
+* [React](https://facebook.github.io/react) for the fun.
 * [React Redux](https://github.com/rackt/react-redux) to make it easier.
