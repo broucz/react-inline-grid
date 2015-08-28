@@ -5,7 +5,6 @@ export const DEFAULT_SCREEN_OPTIONS = [
     margin: 16,
     columns: 12,
     bigger: true,
-    order: 2,
     query: '(min-width: 840px)'
   },
   {
@@ -13,7 +12,6 @@ export const DEFAULT_SCREEN_OPTIONS = [
     gutter: 16,
     margin: 16,
     columns: 8,
-    order: 1,
     query: '(min-width: 480px) and (max-width: 839px)'
   },
   {
@@ -21,7 +19,6 @@ export const DEFAULT_SCREEN_OPTIONS = [
     gutter: 16,
     margin: 16,
     columns: 4,
-    order: 0,
     query: '(max-width: 479px)'
   }
 ];

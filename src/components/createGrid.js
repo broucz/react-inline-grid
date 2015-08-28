@@ -29,7 +29,6 @@ export default function grid(React) {
       gutter: PropTypes.number,
       margin: PropTypes.number,
       columns: PropTypes.number,
-      order: PropTypes.number.isRequired,
       query: PropTypes.string.isRequired
     })),
     children: PropTypes.any
