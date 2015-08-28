@@ -1,11 +1,10 @@
-import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import createDumb from './createDumb';
 import generateList from '../utils/generateList';
 import generatePayload from '../utils/generatePayload';
 import invariant from '../utils/invariant';
 import capitalize from '../utils/capitalize';
-import { PAYLOAD_LIST } from '../constants';
+import { PAYLOAD_LIST, WHITE_LIST } from '../constants';
 
 function mapStateToProps(state, ownProps) {
   const { is } = ownProps;
@@ -38,13 +37,11 @@ export default function createSmart(React, tag) {
       const { reference } = grid;
       const list = generateList(tag, grid.is);
       const payload = generatePayload(grid.context, list);
-      const whitelist =
-        grid.reference.get(`${tag.toUpperCase()}_WHITE_LIST`);
 
-      payload.get(PAYLOAD_LIST).forEach(n => {
+      payload[PAYLOAD_LIST].forEach(n => {
         const value = (Array.isArray(n)) ? n[0] : n;
         invariant(
-          whitelist.includes(value),
+          WHITE_LIST[tag].indexOf(value) > -1,
           `Property '${value}' is not allowed for <${capitalize(tag)}> component.`
         );
       });
@@ -55,10 +52,10 @@ export default function createSmart(React, tag) {
 
   Smart.propTypes = {
     grid: PropTypes.shape({
-      context: PropTypes.instanceOf(Map).isRequired,
+      context: PropTypes.object.isRequired,
       dispatch: PropTypes.func.isRequired,
       is: PropTypes.string,
-      reference: PropTypes.instanceOf(Map).isRequired
+      reference: PropTypes.object.isRequired
     }).isRequired
   };
 

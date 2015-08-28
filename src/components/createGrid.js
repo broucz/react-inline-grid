@@ -1,4 +1,3 @@
-import { fromJS } from 'immutable';
 import { Provider } from 'react-redux';
 import store from '../store';
 import createContext from './createContext';
@@ -11,10 +10,10 @@ export default function grid(React) {
   class Grid extends Component {
     render() {
       const { options, children, ...clean } = this.props;
-      const o = fromJS((options || DEFAULT_SCREEN_OPTIONS));
+      const o = (options || DEFAULT_SCREEN_OPTIONS);
 
       return (
-        <Provider store={store(fromJS(o))}>
+        <Provider store={store(o)}>
           <div>
             <Context options={o} {...clean}/>
             {children}

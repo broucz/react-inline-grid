@@ -1,33 +1,21 @@
 'use strict';
 
+var _ = require('lodash');
 var path = require('path');
 var webpack = require('webpack');
 var baseConfig = require('./webpack.config.base');
 
-var config = Object.create(baseConfig);
-config.devtool = 'cheap-module-eval-source-map';
-config.entry = [
-  'webpack-dev-server/client?http://localhost:3000',
-  'webpack/hot/only-dev-server',
-  path.join(__dirname, 'index')
-];
-config.plugins = [
-  new webpack.optimize.OccurenceOrderPlugin(),
-  new webpack.DefinePlugin({
-    'process.env.NODE_ENV': JSON.stringify('development')
-  }),
-  new webpack.HotModuleReplacementPlugin(),
-  new webpack.NoErrorsPlugin()
-];
-config.module = {
-  loaders: [{
-    test: /\.js$/,
-    loaders: ['react-hot', 'babel-loader'],
-    exclude: /node_modules/
-  }, {
-    test: /\.css$/,
-    loaders: [ 'style-loader', 'css-loader' ]
-  }]
-};
-
-module.exports = config;
+module.exports = _.merge({}, baseConfig, {
+  entry: _.union(baseConfig.entry, [
+    'webpack-dev-server/client?http://localhost:3000',
+    'webpack/hot/only-dev-server'
+  ]),
+  plugins: _.union(baseConfig.plugins, [
+    new webpack.DefinePlugin({
+      '__DEV__': 'false',
+      'process.env.NODE_ENV': '"production"'
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
+  ])
+});

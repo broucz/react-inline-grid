@@ -1,5 +1,3 @@
-import { Map } from 'immutable';
-
-export default function reference(state = new Map) {
+export default function reference(state = {}) {
   return state;
 }

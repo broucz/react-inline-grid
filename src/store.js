@@ -11,5 +11,6 @@ export default function store(options) {
     {
       context: hydrateContext(options, isMatching),
       reference: hydrateReference(options, isWebKitNeeded(navigator.userAgent))
-    });
+    }
+  );
 }

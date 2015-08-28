@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('lodash');
+var path = require('path');
 var webpack = require('webpack');
 
 var reactExternal = {
@@ -16,14 +18,24 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.js$/, loaders: ['babel-loader'], exclude: /node_modules/ }
+      {
+        test: /\.js$/,
+        loaders: ['babel-loader'],
+        include: [
+          path.resolve(__dirname, 'src'),
+          path.resolve(__dirname, 'node_modules', 'lodash')
+        ]
+      }
     ]
+  },
+  node: {
+    process: false
   },
   output: {
     library: 'ReactInlineGrid',
     libraryTarget: 'umd'
   },
-  resolve: {
-    extensions: ['', '.js']
-  }
+  plugins: [
+    new webpack.optimize.OccurenceOrderPlugin()
+  ]
 };

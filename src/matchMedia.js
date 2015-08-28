@@ -1,31 +1,27 @@
-import { Seq, Map, OrderedSet } from 'immutable';
-
 class MatchMedia {
   constructor(options) {
-    this.listeners = new OrderedSet;
+    this.listeners = [];
+    this.state = options.reduce((acc, current) => {
+      const { name, query } = current;
+      const MediaQueryList = window.matchMedia(query);
 
-    this.state =
-      new Seq(options)
-        .reduce((obj, n) => {
-          const name = n.get('name');
-          const MediaQueryList = window.matchMedia(n.get('query'));
+      // TODO:
+      // below `onchange` fail to fire event in FF & Safari, if someone know
+      // how to make it work, thanks to let me know.
+      //
+      //  MediaQueryList.onchange = event => {
+      //    this.updateCurrentMatch(name, event);
+      //  };
 
+      MediaQueryList.addListener((event) => {
+        this.updateCurrentMatch(name, event);
+      });
 
-          // TODO:
-          // below `onchange` fail to fire event in FF & Safari, if someone know
-          // how to make it work, thanks to let me know.
-          //
-          //  MediaQueryList.onchange = event => {
-          //    this.updateCurrentMatch(name, event);
-          //  };
-
-          // `addListener` fix it.
-          MediaQueryList.addListener((event) => {
-            this.updateCurrentMatch(name, event);
-          });
-
-          return obj.setIn(['queries', name], MediaQueryList);
-        }, new Map());
+      return {
+        ...acc,
+        [name]: MediaQueryList
+      };
+    }, {});
   }
 
   updateCurrentMatch(key, event) {
@@ -34,14 +30,8 @@ class MatchMedia {
     }
   }
 
-  sendCurrent(key, event) {
-    if (event.matches) {
-      this.listeners.map(listener => listener(key));
-    }
-  }
-
   subscribe(listener) {
-    this.listeners = this.listeners.add(listener);
+    this.listeners.push(listener);
   }
 
   // TODO

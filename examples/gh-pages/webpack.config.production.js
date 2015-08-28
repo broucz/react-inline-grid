@@ -1,32 +1,23 @@
 'use strict';
 
-var path = require('path');
+var _ = require('lodash');
 var webpack = require('webpack');
 var baseConfig = require('./webpack.config.base');
 
-var config = Object.create(baseConfig);
-config.entry = path.join(__dirname, 'index');
-config.plugins = [
-  new webpack.optimize.OccurenceOrderPlugin(),
-  new webpack.DefinePlugin({
-    'process.env.NODE_ENV': JSON.stringify('production')
-  }),
-  new webpack.optimize.UglifyJsPlugin({
-    compressor: {
-      screw_ie8: true,
-      warnings: false
-    }
-  })
-];
-config.module = {
-  loaders: [{
-    test: /\.js$/,
-    loaders: ['babel-loader'],
-    exclude: /node_modules/
-  }, {
-    test: /\.css$/,
-    loaders: [ 'style-loader', 'css-loader' ]
-  }]
-};
-
-module.exports = config;
+module.exports = _.merge({}, baseConfig, {
+  plugins: _.union(baseConfig.plugins, [
+    new webpack.DefinePlugin({
+      '__DEV__': 'false',
+      'process.env.NODE_ENV': '"production"'
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        pure_getters: true,
+        unsafe: true,
+        unsafe_comps: true,
+        screw_ie8: true,
+        warnings: false
+      }
+    })
+  ])
+});

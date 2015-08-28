@@ -1,4 +1,3 @@
-import { Map } from 'immutable';
 import reducePayload from '../utils/reducePayload';
 
 export default function createDumb(React) {
@@ -6,7 +5,7 @@ export default function createDumb(React) {
 
   class Dumb extends Component {
     shouldComponentUpdate(nextProps) {
-      return !nextProps.grid.payload.equals(this.props.grid.payload);
+      return nextProps.grid.payload !== this.props.grid.payload;
     }
 
     render() {
@@ -19,7 +18,7 @@ export default function createDumb(React) {
       const result = reducePayload(grid.payload, grid.reference);
 
       return (
-        <div style={result.toObject()}>
+        <div style={result}>
           {Children.map(children, child => {
             return cloneElement(child, {...clean});
           })}
@@ -30,8 +29,8 @@ export default function createDumb(React) {
 
   Dumb.propTypes = {
     grid: PropTypes.shape({
-      payload: React.PropTypes.instanceOf(Map).isRequired,
-      reference: React.PropTypes.instanceOf(Map).isRequired
+      payload: React.PropTypes.object.isRequired,
+      reference: React.PropTypes.object.isRequired
     }).isRequired,
     children: PropTypes.any
   };

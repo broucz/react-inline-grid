@@ -1,11 +1,10 @@
-import { Map } from 'immutable';
-
 export const DEFAULT_SCREEN_OPTIONS = [
   {
     name: 'desktop',
     gutter: 16,
     margin: 16,
     columns: 12,
+    bigger: true,
     order: 2,
     query: '(min-width: 840px)'
   },
@@ -29,18 +28,39 @@ export const DEFAULT_SCREEN_OPTIONS = [
 
 export const ROW = 'row';
 export const CELL = 'cell';
-export const ROW_WHITE_LIST = 'ROW_WHITE_LIST';
-export const CELL_WHITE_LIST = 'CELL_WHITE_LIST';
-
-export const ROW_ROOT = new Map({
-  display: 'flex',
-  flexFlow: 'row wrap',
-  alignItems: 'stretch'
-});
-
-export const CELL_ROOT = new Map({
-  boxSizing: 'border-box'
-});
+export const WHITE_LIST = {
+  [ROW]: [
+    'row',
+    'start',
+    'center',
+    'end',
+    'around',
+    'between',
+    'nospace'
+  ],
+  [CELL]: [
+    'cell',
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    '11',
+    '12',
+    'top',
+    'middle',
+    'bottom',
+    'stretch',
+    'between',
+    'offset',
+    'nospace'
+  ]
+};
 
 export const SCREEN = 'screen';
 export const CONTEXT = 'context';

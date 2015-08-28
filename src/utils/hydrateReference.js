@@ -1,136 +1,83 @@
-import { Map, List, Range } from 'immutable';
 import fixUserAgent from './fixUserAgent';
-import {
-  ROW,
-  CELL,
-  ROW_WHITE_LIST,
-  CELL_WHITE_LIST,
-  ROW_ROOT,
-  CELL_ROOT
-} from '../constants';
+import calcPropWithGutter from './calcPropWithGutter';
+import { ROW, CELL } from '../constants';
 
-// Mixins for width and offset calculation.
-function partialSize(size, columns, gutter) {
-  return `calc(${(size / columns) * 100}% - ${gutter}px)`;
-}
-function fullSize(gutter) {
-  return partialSize(1, 1, gutter);
-}
-function offsetSize(size, columns, gutter) {
-  return `calc(${(size / columns) * 100}% + ${gutter / 2}px)`;
-}
+const ROW_ROOT = {
+  display: 'flex',
+  flexFlow: 'row wrap',
+  alignItems: 'stretch'
+};
 
-export default function hydrateReference(options, isWebKitNeeded) {
-  const initial = new Map();
-
-  const bigger = options.maxBy(n => n.get('order'));
-  const smaller = options.minBy(n => n.get('order'));
+export default function hydrateReference(options, needFix) {
+  const bigger = options.filter(n => n.bigger)[0];
 
   const {
     justifyContent,
     alignSelf,
-    UA_ROW
-    } = fixUserAgent(isWebKitNeeded, ROW_ROOT);
+    FIXED_ROW
+    } = fixUserAgent(ROW_ROOT, needFix);
 
-  return initial.withMutations(container => {
-    container
-      .setIn([ROW_WHITE_LIST], List.of(
-        'row',
-        'start',
-        'center',
-        'end',
-        'around',
-        'between',
-        'nospace'
-      ))
-      .setIn([CELL_WHITE_LIST], List.of(
-        'cell',
-        '1',
-        '2',
-        '3',
-        '4',
-        '5',
-        '6',
-        '7',
-        '8',
-        '9',
-        '10',
-        '11',
-        '12',
-        'top',
-        'middle',
-        'bottom',
-        'stretch',
-        'between',
-        'offset',
-        'nospace'
-      ));
+  return options.reduce((acc, current) => {
+    const { name, gutter, margin, columns } = current;
 
-    options.forEach(screen => {
-      const name = screen.get('name');
-      const gutter = screen.get('gutter') || 0;
-      const margin = screen.get('margin') || 0;
-      const columns = screen.get('columns') || 12;
+    // Define partial sizes for columnNumber < totalColumns.
+    const partialWidth =
+      calcPropWithGutter(
+        [1, columns, gutter],
+        'width'
+      );
 
-      container
+    // Define sizes = 100% for everything else.
+    const fullWidth =
+      calcPropWithGutter(
+        [columns, bigger.columns + 1, gutter],
+        'width',
+        true
+      );
 
-        // Define `row`
-        .setIn([name, ROW], UA_ROW)
-        .setIn([name, ROW, 'padding'], `${margin - (gutter / 2)}px`)
+    // Define offset sizes.
+    const offset =
+      calcPropWithGutter(
+        [0, columns, gutter / 2],
+        'marginLeft'
+      );
 
-        // Define `cell`
-        .setIn([name, CELL], CELL_ROOT)
-        .setIn([name, CELL, 'margin'], `${gutter / 2}px`)
-        .setIn(
-          [name, CELL, 'width'],
-          partialSize(smaller.get('columns'), columns, gutter)
-        )
+    return {
+      ...acc,
+      [name]: {
+        // Define `row`.
+        [ROW]: {
+          ...FIXED_ROW,
+          padding: `${margin - (gutter / 2)}px`
+        },
 
-        // COMMON
-        .setIn([name, 'nospace'], {padding: 0, margin: 0})
+        // Define `cell`.
+        [CELL]: {
+          boxSizing: 'border-box',
+          margin: `${gutter / 2}px`,
+          width: `calc(100% - ${gutter}px)`
+        },
 
-        // ROW
-        .setIn([name, 'start', justifyContent], `flex-start`)
-        .setIn([name, 'center', justifyContent], `center`)
-        .setIn([name, 'end', justifyContent], `flex-end`)
-        .setIn([name, 'around', justifyContent], `space-around`)
-        .setIn([name, 'between', justifyContent], `space-between`)
+        // Shared values.
+        nospace: { padding: 0, margin: 0 },
 
-        // CELL
-        .setIn([name, 'top', alignSelf], `flex-start`)
-        .setIn([name, 'middle', alignSelf], `center`)
-        .setIn([name, 'bottom', alignSelf], `flex-end`)
-        .setIn([name, 'stretch', alignSelf], `stretch`);
+        // Define <Row> properties.
+        start: { [justifyContent]: 'flex-start' },
+        center: { [justifyContent]: 'center' },
+        end: { [justifyContent]: 'flex-end' },
+        around: { [justifyContent]: 'space-around' },
+        between: { [justifyContent]: 'space-between' },
 
-      // Define partial sizes for columnNumber < totalColumns.
-      new Range(1, columns)
-        .toArray()
-        .map(n => {
-          container.setIn(
-            [name, `${n}`, 'width'],
-            partialSize(n, columns, gutter)
-          );
-        });
+        // Define <Cell> properties.
+        top: { [alignSelf]: 'flex-start' },
+        middle: { [alignSelf]: 'center' },
+        bottom: { [alignSelf]: 'flex-end' },
+        stretch: { [alignSelf]: 'stretch' },
 
-      // Define sizes = 100% for everything else.
-      new Range(columns, bigger.get('columns') + 1)
-        .toArray()
-        .map(n => {
-          container.setIn(
-            [name, `${n}`, 'width'],
-            fullSize(gutter)
-          );
-        });
-
-      // Define offset sizes.
-      new Range(0, columns)
-        .toArray()
-        .map(n => {
-          container.setIn(
-            [name, 'offset', `${n}`, `marginLeft`],
-            offsetSize(n, columns, gutter)
-          );
-        });
-    });
-  });
+        ...partialWidth,
+        ...fullWidth,
+        offset: { ...offset }
+      }
+    };
+  }, {});
 }

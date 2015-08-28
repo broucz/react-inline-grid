@@ -1,17 +1,46 @@
 import expect from 'expect';
 import fixUserAgent from '../../src/utils/fixUserAgent';
-import { ROW_ROOT } from '../../src/constants';
+
+const base = {
+  alignSelf: 'alignSelf',
+  justifyContent: 'justifyContent',
+  row: {
+    display: 'flex',
+    flexFlow: 'row wrap',
+    alignItems: 'stretch'
+  }
+};
+
+const resultNotFixed = {
+  alignSelf: 'alignSelf',
+  justifyContent: 'justifyContent',
+  FIXED_ROW: {
+    display: 'flex',
+    flexFlow: 'row wrap',
+    alignItems: 'stretch'
+  }
+};
+
+const resultFixed = {
+  alignSelf: 'WebkitAlignSelf',
+  justifyContent: 'WebkitJustifyContent',
+  FIXED_ROW: {
+    display: '-webkit-flex',
+    WebkitFlexFlow: 'row wrap',
+    WebkitAlignItems: 'stretch'
+  }
+};
 
 describe('Utils', () => {
   describe('fixUserAgent', () => {
-    it(`TODO: if needed -> should be done...`, () => {
-      const v = fixUserAgent(true, ROW_ROOT);
-      expect(true).toBe(true);
+    it(`should not fix`, () => {
+      const v = fixUserAgent(base.row, false);
+      expect(v).toEqual(resultNotFixed);
     });
 
-    it(`TODO: if not needed -> should be done...`, () => {
-      const v = fixUserAgent(false, ROW_ROOT);
-      expect(true).toBe(true);
+    it(`should fix`, () => {
+      const v = fixUserAgent(base.row, true);
+      expect(v).toEqual(resultFixed);
     });
   });
 });

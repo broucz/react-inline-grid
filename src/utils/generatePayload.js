@@ -1,34 +1,30 @@
-import { OrderedSet, Seq, Map } from 'immutable';
+import compact from 'lodash/array/compact';
 import { SCREEN, PAYLOAD_CONTEXT, PAYLOAD_LIST } from '../constants';
 
-function reduceList(context, list) {
-  const screen = context.get(SCREEN);
+function reduceList(context, list = []) {
+  const screen = context[SCREEN];
+  return compact(list.map(n => {
+    const [ entry, ...value ] = n.split('-');
 
-  const payload = new Seq(list)
-    .reduce((acc, n) => {
-      const [ entry, ...value ] = n.split('-');
-
-      switch (value.length) {
-      case 0:
-        return acc.add(entry);
-      case 1:
-        if (entry === 'offset') {
-          return acc.add([entry, ...value]);
-        }
-        if (entry !== screen) return acc;
-        return acc.add(...value);
-      case 2:
-        if (entry !== screen) return acc;
-        if (value[0] === 'offset') {
-          return acc.add(value);
-        }
-        return acc;
-      default:
-        return acc;
+    switch (value.length) {
+    case 0:
+      return entry;
+    case 1:
+      if (entry === 'offset') {
+        return [entry, ...value];
       }
-    }, new OrderedSet);
-
-  return payload;
+      if (entry !== screen) return false;
+      return value;
+    case 2:
+      if (entry !== screen) return false;
+      if (value[0] === 'offset') {
+        return value;
+      }
+      return false;
+    default:
+      return false;
+    }
+  }));
 }
 
 /**
@@ -52,8 +48,8 @@ function reduceList(context, list) {
  * @returns {Map}
  */
 export default function generatePayload(context, list) {
-  return new Map({
+  return {
     [PAYLOAD_CONTEXT]: context,
     [PAYLOAD_LIST]: reduceList(context, list)
-  });
+  };
 }

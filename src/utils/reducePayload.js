@@ -1,12 +1,13 @@
-import { Seq, Map } from 'immutable';
+import getIn from 'lodash/object/get';
 import { PAYLOAD_CONTEXT, SCREEN, PAYLOAD_LIST } from '../constants';
 
 export default function reducePayload(payload, reference) {
-  const screen = payload.getIn([PAYLOAD_CONTEXT, SCREEN]);
-  const list = payload.get(PAYLOAD_LIST);
+  const screen = getIn(payload, [PAYLOAD_CONTEXT, SCREEN]);
 
-  return new Seq(list)
-    .reduce((obj, n) => {
-      return obj.merge(reference.getIn([screen, ...n]));
-    }, new Map);
+  return payload[PAYLOAD_LIST].reduce((acc, current) => {
+    return {
+      ...acc,
+      ...getIn(reference, [screen, ...current])
+    };
+  }, {});
 }

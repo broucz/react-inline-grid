@@ -8,6 +8,7 @@ const options = [
     gutter: 16,
     margin: 16,
     columns: 12,
+    bigger: true,
     order: 2,
     query: '(min-width: 840px)'
   },

@@ -1,27 +1,26 @@
-export default function fixUserAgent(isWebKitNeeded, rowRoot) {
+export default function fixUserAgent(rowRoot, needFix) {
   const justifyContent =
-    isWebKitNeeded
+    needFix
       ? 'WebkitJustifyContent'
       : 'justifyContent';
 
   const alignSelf =
-    isWebKitNeeded
+    needFix
       ? 'WebkitAlignSelf'
       : 'alignSelf';
 
-  const UA_ROW =
-    isWebKitNeeded
-      ? rowRoot.withMutations(row => {
-        row
-          .set('display', '-webkit-flex')
-          .set('WebkitFlexFlow', 'row wrap')
-          .set('WebkitAlignItems', 'stretch');
-      })
+  const FIXED_ROW =
+    needFix
+      ? {
+        display: '-webkit-flex',
+        WebkitFlexFlow: 'row wrap',
+        WebkitAlignItems: 'stretch'
+      }
       : rowRoot;
 
   return {
     justifyContent,
     alignSelf,
-    UA_ROW
+    FIXED_ROW
   };
 }

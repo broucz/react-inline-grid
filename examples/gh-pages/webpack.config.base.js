@@ -4,15 +4,31 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
+  entry: [path.join(__dirname)],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        loaders: ['babel-loader'],
+        exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        loaders: [ 'style-loader', 'css-loader' ]
+      }
+    ]
   },
   resolve: {
     alias: {
       'react-inline-grid': path.join(__dirname, '..', '..', 'src'),
       'react': path.resolve(__dirname, 'node_modules', 'react')
-    },
-    extensions: ['', '.js']
-  }
+    }
+  },
+  plugins: [
+    new webpack.optimize.OccurenceOrderPlugin()
+  ]
 };

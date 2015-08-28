@@ -1,5 +1,3 @@
-import { List } from 'immutable';
-
 /**
  * Return an Immutable List with component `tag` as first
  * entry following buy `input` values separated by whitespace.
@@ -15,8 +13,7 @@ import { List } from 'immutable';
  */
 export default function generateList(tag, input) {
   if (input && input.trim()) {
-    const clean = List.of(...input.trim().split(/\s+/));
-    return clean.unshift(tag);
+    return [tag, ...input.trim().split(/\s+/)];
   }
-  return new List([tag]);
+  return [tag];
 }

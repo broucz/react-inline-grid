@@ -1,4 +1,3 @@
-import { Map, List } from 'immutable';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { updateContextScreen } from '../actions';
@@ -53,8 +52,8 @@ export default function createContext(React) {
       actions: PropTypes.shape({
         updateContextScreen: PropTypes.func.isRequired
       }).isRequired,
-      context: PropTypes.instanceOf(Map).isRequired,
-      options: PropTypes.instanceOf(List).isRequired
+      context: PropTypes.object.isRequired,
+      options: PropTypes.array.isRequired // TODO: add inner shape when limited `options`
     }).isRequired
   };
 

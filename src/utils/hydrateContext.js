@@ -1,12 +1,11 @@
-import { Map } from 'immutable';
+import getIn from 'lodash/object/get';
 import { SCREEN } from '../constants';
 
 export default function hydrateContext(options, isMatching) {
-  return new Map({
-    [SCREEN]:
-      options
-        .filter(n => isMatching(n.get('query')).matches)
-        .first()
-        .get('name')
-  });
+  return {
+    [SCREEN]: getIn(
+      options.filter(n => isMatching(n.query).matches)[0],
+      'name'
+    )
+  };
 }

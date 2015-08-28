@@ -1,55 +1,77 @@
-import { Map, List, OrderedSet } from 'immutable';
 import expect from 'expect';
 import generatePayload from '../../src/utils/generatePayload';
 import { PAYLOAD_CONTEXT, PAYLOAD_LIST, SCREEN } from '../../src/constants';
 
-const context = new Map({ [SCREEN]: 'phone'});
+const context = { [SCREEN]: 'phone'};
 
 describe('Utils', () => {
   describe('generatePayload', () => {
-    it(`should Map.context has <context>`, () => {
+    it('should keep <context>', () => {
+      const expected = context;
       const v = generatePayload(context);
-      expect(v.get(PAYLOAD_CONTEXT)).toBe(context);
+      expect(v[PAYLOAD_CONTEXT]).toEqual(expected);
     });
 
-    it(`should Map.${PAYLOAD_LIST} be empty if <list> is empty`, () => {
-      const l = List.of();
-      const expected = OrderedSet.of();
-      const v = generatePayload(context, l);
-      expect(v.get(PAYLOAD_LIST).toArray()).toEqual(expected.toArray());
+    it('should handle empty <list>', () => {
+      const expected = [];
+      const v = generatePayload(context);
+      expect(v[PAYLOAD_LIST]).toEqual(expected);
     });
 
-    it(`should Map.${PAYLOAD_LIST} handle global value(s)`, () => {
-      const l = List.of('a', 'b', 'c', 'offset-2');
-      const expected =
-        new OrderedSet()
-          .add('a')
-          .add('b')
-          .add('c')
-          .add(['offset', '2']);
-      const v = generatePayload(context, l);
-      expect(v.get(PAYLOAD_LIST).toArray()).toEqual(expected.toArray());
+    it('should handle global value(s)', () => {
+      const list = ['a', 'b', 'c'];
+      const expected = ['a', 'b', 'c'];
+      const v = generatePayload(context, list);
+      expect(v[PAYLOAD_LIST]).toEqual(expected);
     });
 
-    it(`should keep only matching value(s)`, () => {
-      const l = List.of('a', 'phone-b', 'fail-c', 'offset-2', 'fail-offset-1');
-      const expected =
-        new OrderedSet()
-          .add('a')
-          .add('b')
-          .add(['offset', '2']);
-      const v = generatePayload(context, l);
-      expect(v.get(PAYLOAD_LIST).toArray()).toEqual(expected.toArray());
+    it('should handle global named value(s)', () => {
+      const list = ['a', 'b', 'offset-2'];
+      const expected = ['a', 'b', ['offset', '2']];
+      const v = generatePayload(context, list);
+      expect(v[PAYLOAD_LIST]).toEqual(expected);
+    });
+
+    it('should ignore non matching value(s)', () => {
+      const list = ['a', 'b', 'fail-c'];
+      const expected = ['a', 'b'];
+      const v = generatePayload(context, list);
+      expect(v[PAYLOAD_LIST]).toEqual(expected);
+    });
+
+    it('should keep matching value(s)', () => {
+      const list = ['a', 'phone-b', 'c'];
+      const expected = ['a', 'b', 'c'];
+      const v = generatePayload(context, list);
+      expect(v[PAYLOAD_LIST]).toEqual(expected);
+    });
+
+    it('should ignore non matching named value(s)', () => {
+      const list = ['a', 'b', 'fail-offset-2'];
+      const expected = ['a', 'b'];
+      const v = generatePayload(context, list);
+      expect(v[PAYLOAD_LIST]).toEqual(expected);
+    });
+
+    it('should keep matching named value(s)', () => {
+      const list = ['a', 'b', 'phone-offset-2'];
+      const expected = ['a', 'b', ['offset', '2']];
+      const v = generatePayload(context, list);
+      expect(v[PAYLOAD_LIST]).toEqual(expected);
+    });
+
+    it(`should ignore invalid named value(s)`, () => {
+      const list = ['a', 'b', 'phone-fail-2'];
+      const expected = ['a', 'b'];
+      const v = generatePayload(context, list);
+      expect(v[PAYLOAD_LIST]).toEqual(expected);
     });
 
     it(`should ignore invalid value(s)`, () => {
-      const l = List.of('a', 'b', 'phone-fail-c', 'phone-fail-to-long');
-      const expected =
-        new OrderedSet()
-          .add('a')
-          .add('b');
-      const v = generatePayload(context, l);
-      expect(v.get(PAYLOAD_LIST).toArray()).toEqual(expected.toArray());
+      const list = ['a', 'b', 'phone-offset-2-fail'];
+      const expected = ['a', 'b'];
+      const v = generatePayload(context, list);
+      expect(v[PAYLOAD_LIST]).toEqual(expected);
     });
   });
 });
