@@ -4,12 +4,11 @@ import { Grid, Row, Cell } from 'react-inline-grid';
 const box = { background: '#bdbdbd', padding: '8px' };
 const options = [
   {
-    name: 'desktop',
+    name: 'phone',
     gutter: 16,
     margin: 16,
-    columns: 12,
-    bigger: true,
-    query: '(min-width: 840px)'
+    columns: 4,
+    query: '(max-width: 479px)'
   },
   {
     name: 'tablet',
@@ -19,11 +18,11 @@ const options = [
     query: '(min-width: 480px) and (max-width: 839px)'
   },
   {
-    name: 'phone',
+    name: 'desktop',
     gutter: 16,
     margin: 16,
-    columns: 4,
-    query: '(max-width: 479px)'
+    columns: 12,
+    query: '(min-width: 840px)'
   }
 ];
 

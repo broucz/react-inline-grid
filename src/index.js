@@ -1,14 +1,10 @@
-import React from 'react';
-import {
-  createProvider,
-  createComponent
-} from './components/create';
+import create from './components/create';
 
-const Grid = createProvider(React);
-const { Row, Cell } = createComponent(React);
+export { default as Grid } from './components/Grid';
+
+const { Row, Cell } = create();
 
 export {
-  Grid,
   Row,
   Cell
 };

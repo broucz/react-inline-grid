@@ -22,7 +22,7 @@ describe('Utils', () => {
         propA: 'A',
         propB: 'B'
       };
-      const v = reducePayload(payload, reference);
+      const v = reducePayload({ payload, reference });
       expect(v).toEqual(expected);
     });
   });
