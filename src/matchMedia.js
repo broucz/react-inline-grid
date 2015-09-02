@@ -1,9 +1,13 @@
+import fixMatchMedia from './utils/fixMatchMedia';
+
 class MatchMedia {
   constructor(options) {
     this.listeners = [];
     this.state = options.reduce((acc, current) => {
       const { name, query } = current;
-      const MediaQueryList = window.matchMedia(query);
+      const MediaQueryList = (window.matchMedia)
+        ? window.matchMedia(query)
+        : fixMatchMedia();
 
       // TODO:
       // below `onchange` fail to fire event in FF & Safari, if someone know
