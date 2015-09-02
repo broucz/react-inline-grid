@@ -1,0 +1,149 @@
+$large-breakpoint: 64em;
+$medium-breakpoint: 42em;
+
+@mixin large {
+  @media screen and (min-width: #{$large-breakpoint}) {
+    @content;
+  }
+}
+
+@mixin medium {
+  @media screen and (min-width: #{$medium-breakpoint}) and (max-width: #{$large-breakpoint}) {
+    @content;
+  }
+}
+
+@mixin small {
+  @media screen and (max-width: #{$medium-breakpoint}) {
+    @content;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #606c71;
+}
+
+a {
+  color: #4285F4;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.btn {
+  display: inline-block;
+  margin-bottom: 1em;
+  color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0.3em;
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  + .btn {
+    margin-left: 1em;
+  }
+
+  @include large {
+    padding: 0.75em 1em;
+  }
+
+  @include medium {
+    padding: 0.6em 0.9em;
+    font-size: 0.9em;
+  }
+
+  @include small {
+    display: block;
+    width: 100%;
+    padding: 0.75em;
+    font-size: 0.9em;
+
+    + .btn {
+      margin-top: 1em;
+      margin-left: 0;
+    }
+  }
+}
+
+.pageHeader {
+  color: #fff;
+  text-align: center;
+  background: -webkit-linear-gradient(120deg, #4285F4 10%, #4A75BD 90%);
+  background:    -moz-linear-gradient(120deg, #4285F4 10%, #4A75BD 90%);
+  background:     -ms-linear-gradient(120deg, #4285F4 10%, #4A75BD 90%);
+  background:      -o-linear-gradient(120deg, #4285F4 10%, #4A75BD 90%);
+  background:         linear-gradient(120deg, #4285F4 10%, #4A75BD 90%);
+
+
+  @include large {
+    padding: 5em 6em;
+  }
+
+  @include medium {
+    padding: 3em 4em;
+  }
+
+  @include small {
+    padding: 2em 1em;
+  }
+}
+
+.pageHeaderTitle {
+  margin-top: 0;
+  margin-bottom: 0.1em;
+  font-family: Menlo, Monaco, Courier, monospace;
+
+  @include large {
+    font-size: 3.25em;
+  }
+
+  @include medium {
+    font-size: 2.25em;
+  }
+
+  @include small {
+    font-size: 1.75em;
+  }
+}
+
+.pageHeaderTagline {
+  margin-bottom: 2em;
+  font-weight: normal;
+  opacity: 0.8;
+
+  @include large {
+    font-size: 1.25em;
+  }
+
+  @include medium {
+    font-size: 1.15em;
+  }
+
+  @include small {
+    font-size: 1em;
+  }
+}
+
+.pageContent {
+  font-size: 1.1em;
+}

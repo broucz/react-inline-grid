@@ -11,16 +11,20 @@ class Root extends Component {
   render() {
     return (
       <Grid>
-        <Row is="center">
-          <Cell is="10">
-            <Header/>
-            <Intro/>
-            <Alignments/>
-            <Offset/>
-            <Distribution/>
-            <Spacing/>
-          </Cell>
-        </Row>
+        <div>
+          <Header/>
+          <div className="pageContent">
+            <Row is="center">
+              <Cell is="10">
+                <Intro/>
+                <Alignments/>
+                <Offset/>
+                <Distribution/>
+                <Spacing/>
+              </Cell>
+            </Row>
+          </div>
+        </div>
       </Grid>
     );
   }

@@ -4,11 +4,11 @@ import { Row, Cell } from 'react-inline-grid';
 class Header extends Component {
   render() {
     return (
-      <Row>
-        <Cell is="12">
-          <h1 style={{color: '#333'}}>react-inline-grid</h1>
-        </Cell>
-      </Row>
+      <section className="pageHeader">
+        <h1 className="pageHeaderTitle">react-inline-grid</h1>
+        <h2 className="pageHeaderTagline">Predictable flexbox based grid for React</h2>
+        <a href="https://github.com/broucz/react-inline-grid" target="_blank" className="btn">View on GitHub</a>
+      </section>
     );
   }
 }
