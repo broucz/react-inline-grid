@@ -15,7 +15,7 @@
 [![npm version](https://img.shields.io/npm/v/react-inline-grid.svg?style=flat-square)](https://www.npmjs.com/package/react-inline-grid)
 
 ## Install
-`npm install --save react-inline-grid`
+`npm install react-inline-grid --save`
 
 ## API
 
@@ -48,7 +48,7 @@ ReactDOM.render(<Layout />, document.body);
 The library exports `Grid`, `Row` and `Cell`.
 
 ### &lt;Grid />
-Wrap child component with [Redux](https://github.com/rackt/redux) `Provider` and exposes the props `options` (array) to define custom grid settings.
+Wrap child component with [React Redux](https://github.com/rackt/react-redux#provider-store) `<Provider>`, update store according to device properties update using [media queries](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Media_queries) and exposes the props `options` (array) allowing you to define custom grid settings.
 
 `options` shape:
 
@@ -56,11 +56,10 @@ Wrap child component with [Redux](https://github.com/rackt/redux) `Provider` and
 [
   {
     name: string    // required     - Name of the target screen, used as key word ex: <name>-12.
-    order: number   // required     - From smaller to bigger screen.
-    query: string   // required     - Media query to test.
     gutter: number  // default = 0  - Gutter size in pixel.
     margin: number  // default = 0  - Margin size in pixel.
     columns: number // default = 12 - Total number of columns for each row.
+    query: string   // required     - Media query to test.
   }
 ]
 ```
@@ -74,7 +73,6 @@ If `options` is not provided, a default configuration inspired by [Google MDL](h
     gutter: 16,
     margin: 16,
     columns: 4,
-    order: 0,
     query: '(max-width: 479px)'
   },
   {
@@ -82,7 +80,6 @@ If `options` is not provided, a default configuration inspired by [Google MDL](h
     gutter: 16,
     margin: 16,
     columns: 8,
-    order: 1,
     query: '(min-width: 480px) and (max-width: 839px)'
   },
   {
@@ -90,11 +87,13 @@ If `options` is not provided, a default configuration inspired by [Google MDL](h
     gutter: 16,
     margin: 16,
     columns: 12,
-    order: 2,
     query: '(min-width: 840px)'
   }
 ]
 ```
+
+Also, as the style properties are generated from `options` using the  ["bigger" device as reference](https://github.com/broucz/react-inline-grid/blob/master/src/utils/hydrateReference.js#L12), target devices order in `options` matters.
+I want to avoid to test queries at loading time or add extra fields in `options` so far, and so I choose the "popular" mobile first approch. **The "bigger" targeted device have to be the last entry of `options`**.
 
 ### &lt;Row />
 
@@ -146,9 +145,6 @@ Exposes the props `is` (string) to alterate the following default style object:
   </Cell>
 </Row>
 ```
-## Context
-
-TODO when really used.
 
 ## Examples
 
