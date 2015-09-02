@@ -30,7 +30,8 @@
     "style",
     "flux",
     "redux",
-    "predictable"
+    "predictable",
+    "react-component"
   ],
   "author": "Pierre Brouca <broucapierre@gmail.com> (https://github.com/broucz)",
   "license": "MIT",
