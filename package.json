@@ -38,10 +38,11 @@
     "url": "https://github.com/broucz/react-inline-grid/issues"
   },
   "homepage": "https://github.com/broucz/react-inline-grid",
-  "dependencies": {
+  "peerDependencies": {
     "lodash": "^3.10.1",
-    "react-redux": "^1.0.0",
-    "redux": "^1.0.1"
+    "react": "^0.14.0 || ^0.14.0-beta3",
+    "react-redux": "^2.0.0",
+    "redux": "^2.0.0"
   },
   "devDependencies": {
     "babel": "^5.8.21",
