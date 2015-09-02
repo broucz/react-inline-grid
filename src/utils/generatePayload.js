@@ -14,7 +14,7 @@ function reduceList(context, list = []) {
         return [entry, ...value];
       }
       if (entry !== screen) return false;
-      return value;
+      return value[0];
     case 2:
       if (entry !== screen) return false;
       if (value[0] === 'offset') {
@@ -28,24 +28,24 @@ function reduceList(context, list = []) {
 }
 
 /**
- * Return an Immutable Map containing `current` screen `name`
+ * Return an object containing `current` screen `name`
  * as first value and global (as named) or named and matching value(s).
  *
- * context = Map{ screen: 'phone' }
- * list = List['cell', 'middle', 'tablet-3', 'phone-2']
+ * context = { screen: 'phone' }
+ * list = ['cell', 'middle', 'tablet-3', 'phone-2']
  *
- * return Map{
- *  context: Map{ screen: 'phone' },
- *  list: List[
+ * return {
+ *  context: { screen: 'phone' },
+ *  list: [
  *    'cell',
  *    'middle',
  *    '2'
  *  ]
  * }
  *
- * @param {Map} context
- * @param {List} list
- * @returns {Map}
+ * @param {Object} context
+ * @param {Array} list
+ * @returns {Object}
  */
 export default function generatePayload(context, list) {
   return {
