@@ -9,7 +9,7 @@ const ROW_ROOT = {
 };
 
 export default function hydrateReference(options, needFix) {
-  const bigger = options.filter(n => n.bigger)[0];
+  const bigger = options[options.length - 1];
 
   const {
     justifyContent,

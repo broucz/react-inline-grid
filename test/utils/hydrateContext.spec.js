@@ -11,7 +11,7 @@ const options = DEFAULT_SCREEN_OPTIONS;
 describe('Utils', () => {
   describe('hydrateContext', () => {
     it(`should context ${SCREEN} defined.`, () => {
-      const expected = { [SCREEN]: 'desktop' };
+      const expected = { [SCREEN]: 'phone' };
       const v = hydrateContext(options, isMatching);
       expect(v).toEqual(expected);
     });

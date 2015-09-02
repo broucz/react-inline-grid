@@ -1,11 +1,10 @@
 export const DEFAULT_SCREEN_OPTIONS = [
   {
-    name: 'desktop',
+    name: 'phone',
     gutter: 16,
     margin: 16,
-    columns: 12,
-    bigger: true,
-    query: '(min-width: 840px)'
+    columns: 4,
+    query: '(max-width: 479px)'
   },
   {
     name: 'tablet',
@@ -15,11 +14,11 @@ export const DEFAULT_SCREEN_OPTIONS = [
     query: '(min-width: 480px) and (max-width: 839px)'
   },
   {
-    name: 'phone',
+    name: 'desktop',
     gutter: 16,
     margin: 16,
-    columns: 4,
-    query: '(max-width: 479px)'
+    columns: 12,
+    query: '(min-width: 840px)'
   }
 ];
 
