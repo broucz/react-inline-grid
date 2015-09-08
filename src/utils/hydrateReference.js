@@ -8,29 +8,31 @@ const ROW_ROOT = {
   alignItems: 'stretch'
 };
 
-export default function hydrateReference(options, needFix) {
-  const bigger = options[options.length - 1];
+export default function hydrateReference({ options, fix }) {
+  const { list, columns, margin = 16, gutter = 16 } = options;
 
+  const size = list.length;
   const {
     justifyContent,
     alignSelf,
     FIXED_ROW
-    } = fixUserAgent(ROW_ROOT, needFix);
+    } = fixUserAgent(ROW_ROOT, fix);
 
-  return options.reduce((acc, current) => {
-    const { name, gutter, margin, columns } = current;
+  return list.reduce((acc, { name }, i) => {
+    const invert = size - (i + 1);
+    const localColumns = (columns / size) * (size - invert);
 
     // Define partial sizes for columnNumber < totalColumns.
     const partialWidth =
       calcPropWithGutter(
-        [1, columns, gutter],
+        [1, localColumns, gutter],
         'width'
       );
 
     // Define sizes = 100% for everything else.
     const fullWidth =
       calcPropWithGutter(
-        [columns, bigger.columns + 1, gutter],
+        [localColumns, columns + 1, gutter],
         'width',
         true
       );
@@ -38,7 +40,7 @@ export default function hydrateReference(options, needFix) {
     // Define offset sizes.
     const offset =
       calcPropWithGutter(
-        [0, columns, gutter / 2],
+        [0, localColumns, gutter / 2],
         'marginLeft'
       );
 

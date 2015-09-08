@@ -54,9 +54,11 @@ class Root extends Component {
       <div>
         <h3>Pattern * {size} => Connected component: {size * 100} | Row: {size * 4} | Cell: {size * 25}</h3>
         <Grid>
-          {range(1, size).map(n => {
-            return generatePattern(n);
-          })}
+          <div>
+            {range(1, size).map(n => {
+              return generatePattern(n);
+            })}
+          </div>
         </Grid>
       </div>
     );

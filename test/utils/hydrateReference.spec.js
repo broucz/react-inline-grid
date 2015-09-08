@@ -1,17 +1,13 @@
 import expect from 'expect';
 import hydrateReference from '../../src/utils/hydrateReference';
-import { DEFAULT_SCREEN_OPTIONS } from '../../src/constants';
+import { DEFAULT_MEDIA_OPTIONS } from '../../src/constants';
 
-function isWebKitNeeded() {
-  return true;
-}
-
-const options = DEFAULT_SCREEN_OPTIONS;
+const options = DEFAULT_MEDIA_OPTIONS;
 
 describe('Utils', () => {
   describe('hydrateReference', () => {
     it(`TODO: should be done...`, () => {
-      const v = hydrateReference(options, isWebKitNeeded);
+      const v = hydrateReference({ options, true });
       // console.log('v', v);
       expect(true).toBe(true);
     });

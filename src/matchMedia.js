@@ -1,51 +1,83 @@
-import fixMatchMedia from './utils/fixMatchMedia';
+export function setModel(options) {
+  return options.map(n => {
+    const { name, query } = n;
+    return {
+      name,
+      query
+    };
+  });
+}
+
+function setState(model, handleChange) {
+  return model.map(({ name, query }) => {
+    const match = window.matchMedia(query);
+    match.add = () => match.addListener(handleChange);
+    match.add();
+    match.remove = () => match.removeListener(handleChange);
+
+    return {
+      name,
+      match
+    };
+  });
+}
 
 class MatchMedia {
-  constructor(options) {
+  constructor(list) {
     this.listeners = [];
-    this.state = options.reduce((acc, current) => {
-      const { name, query } = current;
-      const MediaQueryList = (window.matchMedia)
-        ? window.matchMedia(query)
-        : fixMatchMedia();
+    this.state = [];
+    this.model = setModel(list.slice());
 
-      // TODO:
-      // below `onchange` fail to fire event in FF & Safari, if someone know
-      // how to make it work, thanks to let me know.
-      //
-      //  MediaQueryList.onchange = event => {
-      //    this.updateCurrentMatch(name, event);
-      //  };
-
-      MediaQueryList.addListener((event) => {
-        this.updateCurrentMatch(name, event);
-      });
-
-      return {
-        ...acc,
-        [name]: MediaQueryList
-      };
-    }, {});
+    return this.updateState();
   }
 
-  updateCurrentMatch(key, event) {
-    if (event.matches) {
-      this.listeners.map(listener => listener(key));
-    }
+  handleChange() {
+    this.state.slice().forEach(({ match }) => match.remove());
+
+    return this.updateState();
+  }
+
+  updateState() {
+    this.state =
+      setState(this.model, this.handleChange.bind(this));
+
+    return this.dispatchUpdate();
+  }
+
+  getCurrentName() {
+    const current =
+      this.state.filter(({ match }) => match.matches);
+
+    const { name } =
+      (current.length > 0)
+        ? current[0]
+        : this.model[0];
+
+    return name;
+  }
+
+  dispatchUpdate() {
+    const current = this.getCurrentName();
+    return this.listeners
+      .slice()
+      .forEach(listener => listener(current));
   }
 
   subscribe(listener) {
     this.listeners.push(listener);
-  }
 
-  // TODO
-  // unsubscribe() {}
+    return function unsubscribe() {
+      const index = this.listeners.indexOf(listener);
+      this.listeners = this.listeners.slice(index, 1);
+    };
+  }
 }
 
-export default function matchMedia(...args) {
-  const mM = new MatchMedia(...args);
+export default function matchMedia(list) {
+  const mM = new MatchMedia(list);
 
   return {
-    subscribe: mM.subscribe.bind(mM)
+    subscribe: mM.subscribe.bind(mM),
+    getCurrentName: mM.getCurrentName()
   };
 }

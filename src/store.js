@@ -1,16 +1,14 @@
 import { createStore, combineReducers } from 'redux';
-import * as reducers from './reducers';
-import hydrateContext from './utils/hydrateContext';
+import media, { hydrateMedia } from './reducers/media';
+import reference from './reducers/reference';
 import hydrateReference from './utils/hydrateReference';
-import isMatching from './utils/isMatching';
-import isWebKitNeeded from './utils/isWebKitNeeded';
 
 export default function store(options) {
   return createStore(
-    combineReducers(reducers),
+    combineReducers({ media, reference }),
     {
-      context: hydrateContext(options, isMatching),
-      reference: hydrateReference(options, isWebKitNeeded(navigator.userAgent))
+      media: hydrateMedia(options.media),
+      reference: hydrateReference(options.reference)
     }
   );
 }

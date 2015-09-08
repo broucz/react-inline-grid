@@ -1,13 +1,11 @@
 import getIn from 'lodash/object/get';
-import { PAYLOAD_CONTEXT, SCREEN, PAYLOAD_LIST } from '../constants';
 
-export default function reducePayload({ payload, reference }) {
-  const screen = getIn(payload, [PAYLOAD_CONTEXT, SCREEN]);
-
-  return payload[PAYLOAD_LIST].reduce((acc, current) => {
+export default function reducePayload({ name, list }, reference) {
+  return list.reduce((acc, current) => {
+    const style = getIn(reference, [name, ...current]);
     return {
       ...acc,
-      ...getIn(reference, [screen, ...current])
+      ...style
     };
   }, {});
 }

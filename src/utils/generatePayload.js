@@ -1,8 +1,6 @@
 import compact from 'lodash/array/compact';
-import { SCREEN, PAYLOAD_CONTEXT, PAYLOAD_LIST } from '../constants';
 
-function reduceList(context, list = []) {
-  const screen = context[SCREEN];
+function reduceList(name, list = []) {
   return compact(list.map(n => {
     const [ entry, ...value ] = n.split('-');
 
@@ -13,10 +11,10 @@ function reduceList(context, list = []) {
       if (entry === 'offset') {
         return [entry, ...value];
       }
-      if (entry !== screen) return false;
+      if (entry !== name) return false;
       return value[0];
     case 2:
-      if (entry !== screen) return false;
+      if (entry !== name) return false;
       if (value[0] === 'offset') {
         return value;
       }
@@ -31,11 +29,11 @@ function reduceList(context, list = []) {
  * Return an object containing `current` screen `name`
  * as first value and global (as named) or named and matching value(s).
  *
- * context = { screen: 'phone' }
+ * media = { name: 'phone' }
  * list = ['cell', 'middle', 'tablet-3', 'phone-2']
  *
  * return {
- *  context: { screen: 'phone' },
+ *  name: 'phone',
  *  list: [
  *    'cell',
  *    'middle',
@@ -43,13 +41,13 @@ function reduceList(context, list = []) {
  *  ]
  * }
  *
- * @param {Object} context
+ * @param {String} name
  * @param {Array} list
  * @returns {Object}
  */
-export default function generatePayload(context, list) {
+export default function generatePayload({ name }, list) {
   return {
-    [PAYLOAD_CONTEXT]: context,
-    [PAYLOAD_LIST]: reduceList(context, list)
+    name,
+    list: reduceList(name, list)
   };
 }

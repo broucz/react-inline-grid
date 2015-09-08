@@ -1,6 +1,5 @@
 import expect from 'expect';
 import reducePayload from '../../src/utils/reducePayload';
-import { PAYLOAD_CONTEXT, SCREEN, PAYLOAD_LIST } from '../../src/constants';
 
 const reference = {
   phone: {
@@ -13,16 +12,16 @@ const reference = {
 describe('Utils', () => {
   describe('reducePayload', () => {
     it(`should merge corresponding values`, () => {
-      const payload = {
-        [PAYLOAD_CONTEXT]: { [SCREEN]: 'phone' },
-        [PAYLOAD_LIST]: ['tag', 'a', ['b', 'inner']]
+      const o = {
+        name: 'phone',
+        list: ['tag', 'a', ['b', 'inner']]
       };
+      const v = reducePayload(o, reference);
       const expected = {
         propTag: 'tag',
         propA: 'A',
         propB: 'B'
       };
-      const v = reducePayload({ payload, reference });
       expect(v).toEqual(expected);
     });
   });

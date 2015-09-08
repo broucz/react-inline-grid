@@ -1,29 +1,26 @@
-export const DEFAULT_SCREEN_OPTIONS = [
-  {
-    name: 'phone',
-    gutter: 16,
-    margin: 16,
-    columns: 4,
-    query: '(max-width: 479px)'
-  },
-  {
-    name: 'tablet',
-    gutter: 16,
-    margin: 16,
-    columns: 8,
-    query: '(min-width: 480px) and (max-width: 839px)'
-  },
-  {
-    name: 'desktop',
-    gutter: 16,
-    margin: 16,
-    columns: 12,
-    query: '(min-width: 840px)'
-  }
-];
-
+export const UPDATE_MEDIA_NAME = 'media/name/UPDATE';
 export const ROW = 'row';
 export const CELL = 'cell';
+export const DEFAULT_MEDIA_OPTIONS = {
+  columns: 12,
+  gutter: 16,
+  margin: 16,
+  deaf: false,
+  list: [
+    {
+      name: 'phone',
+      query: '(max-width: 479px)'
+    },
+    {
+      name: 'tablet',
+      query: '(min-width: 480px) and (max-width: 839px)'
+    },
+    {
+      name: 'desktop',
+      query: '(min-width: 840px)'
+    }
+  ]
+};
 export const WHITE_LIST = {
   [ROW]: [
     'row',
@@ -57,9 +54,3 @@ export const WHITE_LIST = {
     'nospace'
   ]
 };
-
-export const SCREEN = 'screen';
-export const CONTEXT = 'context';
-export const PAYLOAD_CONTEXT = CONTEXT;
-export const PAYLOAD_LIST = 'list';
-export const UPDATE_CONTEXT_SCREEN = 'UPDATE_CONTEXT_SCREEN';
