@@ -32,13 +32,13 @@ const resultFixed = {
 };
 
 describe('Utils', () => {
-  describe('fixUserAgent', () => {
-    it(`should not fix`, () => {
+  describe('fixUserAgent(rowRoot, needFix)', () => {
+    it(`should not fix if fixUserAgent -> needFix is missing or not true`, () => {
       const v = fixUserAgent(base.row, false);
       expect(v).toEqual(resultNotFixed);
     });
 
-    it(`should fix`, () => {
+    it(`should fix if fixUserAgent -> needFix is true`, () => {
       const v = fixUserAgent(base.row, true);
       expect(v).toEqual(resultFixed);
     });

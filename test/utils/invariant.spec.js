@@ -2,8 +2,8 @@ import expect from 'expect';
 import invariant from '../../src/utils/invariant';
 
 describe('Utils', () => {
-  describe('invariant', () => {
-    it(`should throw if !<condition>`, () => {
+  describe('invariant(condition, error)', () => {
+    it(`should throw invariant -> error if !invariant -> condition`, () => {
       expect(() => {
         invariant(false, 'error text');
       }).toThrow('error text');
