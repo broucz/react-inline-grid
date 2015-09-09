@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Row, Cell } from 'react-inline-grid';
-import Code from 'react-embed-code';
 import { COLOR } from '../constants';
 import Box from './Box';
 

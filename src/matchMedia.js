@@ -1,4 +1,4 @@
-export function setModel(options) {
+function setModel(options) {
   return options.map(n => {
     const { name, query } = n;
     return {
