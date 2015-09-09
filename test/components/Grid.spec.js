@@ -10,7 +10,7 @@ import {
 import { MEDIA_MODEL_HELPER } from '../../src/constants';
 
 function buildModelFrom(options) {
-  const { columns, deaf, list } = options;
+  const { list } = options;
   return {
     columns: list.length * 4,
     deaf: false,
