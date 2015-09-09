@@ -93,7 +93,6 @@ export function initModel(options, base) {
   return base;
 }
 
-
 export function setMedia(name) {
   return { name };
 }
