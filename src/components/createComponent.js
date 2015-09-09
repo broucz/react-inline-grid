@@ -20,7 +20,7 @@ const gridShape =
     is: PropTypes.string
   }).isRequired;
 
-export function elem(tag) {
+const elem = (tag) => {
   return class Elem extends Component {
     static propTypes = {
       grid: gridShape
@@ -41,7 +41,7 @@ export function elem(tag) {
       );
     }
   };
-}
+};
 
 export default function createComponent(tag) {
   return connect(
