@@ -1,6 +1,6 @@
 export const UPDATE_MEDIA_NAME = 'media/name/UPDATE';
-export const ROW = 'row';
-export const CELL = 'cell';
+export const ROW_ID = 'row';
+export const CELL_ID = 'cell';
 export const MEDIA_MODEL_HELPER = {
   gutter: 16,
   margin: 16,
@@ -20,7 +20,7 @@ export const MEDIA_MODEL_HELPER = {
   ]
 };
 export const WHITE_LIST = {
-  [ROW]: [
+  [ROW_ID]: [
     'row',
     'start',
     'center',
@@ -29,7 +29,7 @@ export const WHITE_LIST = {
     'between',
     'nospace'
   ],
-  [CELL]: [
+  [CELL_ID]: [
     'cell',
     '1',
     '2',
