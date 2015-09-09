@@ -57,7 +57,7 @@ export function ensureListProperties(options, base, list) {
   });
 }
 
-export function build(options, base) {
+export function build(options = {}, base = {}) {
   const {
     columns,
     deaf = false,
@@ -86,13 +86,6 @@ export function build(options, base) {
   };
 }
 
-export function initModel(options, base) {
-  if (options) {
-    return build(options, base);
-  }
-  return base;
-}
-
 export function setMedia(name) {
   return { name };
 }
@@ -113,7 +106,7 @@ export default class Grid extends Component {
     // Initialize a new Model:
     // If <Grid> -> options is missing, it return a default Model.
     // if <Grid> -> options is provided, it return a valid Model.
-    const model = initModel(props.options, MEDIA_MODEL_HELPER);
+    const model = build(props.options, MEDIA_MODEL_HELPER);
 
     this.match = matchMedia(model.list);
     this.shouldSubscribe = model.deaf !== true;

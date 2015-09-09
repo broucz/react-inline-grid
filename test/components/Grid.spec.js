@@ -3,7 +3,6 @@ import {
   ensureValue,
   ensureListProperties,
   build,
-  initModel,
   setMedia,
   setReference
 } from '../../src/components/Grid';
@@ -20,20 +19,6 @@ function buildModelFrom(options) {
 
 describe('Components', () => {
   describe('Grid helpers', () => {
-    describe('initModel(options, base)', () => {
-      it('should return a new Model from initModel -> base if initModel -> options is missing', () => {
-        const v = initModel(null, MEDIA_MODEL_HELPER);
-        const expected = MEDIA_MODEL_HELPER;
-        expect(v).toEqual(expected);
-      });
-
-      it('should return a new Model from initModel -> options if provided', () => {
-        const v = initModel(MEDIA_MODEL_HELPER, MEDIA_MODEL_HELPER);
-        const expected = buildModelFrom(MEDIA_MODEL_HELPER);
-        expect(v).toEqual(expected);
-      });
-    });
-
     describe('ensureValue(options, base, key, value)', () => {
       it('should return ensureValue -> value if valid and provided', () => {
         const v = ensureValue(undefined, { a: 12 }, 'a', 0);
