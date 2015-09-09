@@ -1,11 +1,9 @@
 export const UPDATE_MEDIA_NAME = 'media/name/UPDATE';
 export const ROW = 'row';
 export const CELL = 'cell';
-export const DEFAULT_MEDIA_OPTIONS = {
-  columns: 12,
+export const MEDIA_MODEL_HELPER = {
   gutter: 16,
   margin: 16,
-  deaf: false,
   list: [
     {
       name: 'phone',

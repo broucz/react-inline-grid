@@ -1,3 +1,4 @@
+import isUAFixNeeded from './isUAFixNeeded';
 import fixUserAgent from './fixUserAgent';
 import calcPropWithGutter from './calcPropWithGutter';
 import { ROW, CELL } from '../constants';
@@ -8,17 +9,16 @@ const ROW_ROOT = {
   alignItems: 'stretch'
 };
 
-export default function hydrateReference({ options, fix }) {
-  const { list, columns, margin = 16, gutter = 16 } = options;
-
+export default function hydrateReference({ options }) {
+  const { columns, list } = options;
   const size = list.length;
   const {
     justifyContent,
     alignSelf,
     FIXED_ROW
-    } = fixUserAgent(ROW_ROOT, fix);
+    } = fixUserAgent(ROW_ROOT, isUAFixNeeded(navigator.userAgent));
 
-  return list.reduce((acc, { name }, i) => {
+  return list.reduce((acc, { name, gutter, margin }, i) => {
     const invert = size - (i + 1);
     const localColumns = (columns / size) * (size - invert);
 

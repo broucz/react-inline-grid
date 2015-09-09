@@ -3,56 +3,103 @@ import { Provider } from 'react-redux';
 import matchMedia from '../matchMedia';
 import store from '../store';
 import { updateMediaName } from '../reducers/media';
-import isWebKitNeeded from '../utils/isWebKitNeeded';
-import { DEFAULT_MEDIA_OPTIONS } from '../constants';
+import { MEDIA_MODEL_HELPER } from '../constants';
 import invariant from '../utils/invariant';
 
 const optionsShape = PropTypes.shape({
-  columns: PropTypes.number.isRequired,
+  columns: PropTypes.number,
   gutter: PropTypes.number,
   margin: PropTypes.number,
   deaf: PropTypes.bool,
   list: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      query: PropTypes.string.isRequired
+      query: PropTypes.string.isRequired,
+      gutter: PropTypes.number,
+      margin: PropTypes.number
     })
-  ).isRequired
+  )
 });
 
-function setMedia({ getCurrentName }) {
-  return {
-    name: getCurrentName
-  };
-}
-
-function setReference(options, fix) {
-  return {
-    options,
-    fix
-  };
-}
-
-function isValid(options) {
+export function ensureValue(options, base, key, value) {
   if (process.env.NODE_ENV !== 'production') {
-    const { columns, list } = options;
-    const size = list.length;
-
-    // Test columns number.
     invariant(
-      !(columns % size) > 0,
-      `Property 'columns' have to be a multiple of 'list.length'. (here multiple of ${size}).`
+      key,
+      `<Grid> -> ensureValue -> key must be defined.`
+    );
+
+    invariant(
+      base,
+      `<Grid> -> ensureValue -> base must be defined.`
+    );
+
+    invariant(
+      (typeof base[key] !== 'undefined'),
+      `<Grid> -> ensureValue -> base -> key must be defined.`
     );
   }
 
-  return true;
+  if (value >= 0) return value;
+  return (options && options[key] >= 0)
+    ? options[key]
+    : base[key];
 }
 
-export function setModel(options, defaultOptions) {
-  if (options && isValid(options)) {
-    return options;
+export function ensureListProperties(options, base, list) {
+  return list.map(n => {
+    const { name, query, gutter, margin } = n;
+    return {
+      name,
+      query,
+      gutter: ensureValue(options, base, 'gutter', gutter),
+      margin: ensureValue(options, base, 'margin', margin)
+    };
+  });
+}
+
+export function build(options, base) {
+  const {
+    columns,
+    deaf = false,
+    list = base.list
+  } = options;
+
+  const size = list.length;
+
+  invariant(
+    !!size,
+    '<Grid> -> options -> list can not be empty'
+  );
+
+  if (columns) {
+    invariant(
+      !(columns % size) > 0,
+      '<Grid> -> options -> columns must be a multiple of ' +
+      '<Grid> -> options -> list -> length'
+    );
   }
-  return defaultOptions;
+
+  return {
+    columns: columns || size * 4,
+    deaf,
+    list: ensureListProperties(options, base, list)
+  };
+}
+
+export function initModel(options, base) {
+  if (options) {
+    return build(options, base);
+  }
+  return base;
+}
+
+
+export function setMedia(name) {
+  return { name };
+}
+
+export function setReference(options) {
+  return { options };
 }
 
 export default class Grid extends Component {
@@ -63,32 +110,18 @@ export default class Grid extends Component {
 
   constructor(props, context) {
     super(props, context);
-    const UA = navigator.userAgent;
 
-    const { options } = props;
+    // Initialize a new Model:
+    // If <Grid> -> options is missing, it return a default Model.
+    // if <Grid> -> options is provided, it return a valid Model.
+    const model = initModel(props.options, MEDIA_MODEL_HELPER);
 
-    // Define model using `custom` || `default` options.
-    // If `custom` is provided, it check is validity.
-    // If it is invalid, it throw error in `development` and
-    // apply `default` in production.
-    // If is missing, return `default`.
+    this.match = matchMedia(model.list);
+    this.shouldSubscribe = model.deaf !== true;
 
-    // TODO: apply default on missing fields.
-    const model = setModel(options, DEFAULT_MEDIA_OPTIONS);
-    const { list, deaf = false } = model;
-
-    // It allow to subscribe to match media if `deaf` is
-    // messing or !== to true.
-    this.shouldSubscribe = deaf !== true;
-
-    // Define `match` -> subscribe media queries changes and
-    // return current media `name`
-    this.match = matchMedia(list);
-
-    // Helpers to initialize `store`.
-    const media = setMedia(this.match);
-    const reference = setReference(model, isWebKitNeeded(UA));
-
+    // Initialize Redux `store`.
+    const media = setMedia(this.match.getCurrentName);
+    const reference = setReference(model);
     this.store = store({ media, reference });
   }
 
