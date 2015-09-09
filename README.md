@@ -1,16 +1,6 @@
 # [React Inline Grid](http://broucz.github.io/react-inline-grid)
 
-**A simplified and predictable inline grid for laying out content in [React](https://facebook.github.io/react/) applications using [Redux](https://github.com/rackt/redux). ([demo](http://broucz.github.io/react-inline-grid))**
-
-```js
-<Grid>
-  <Row>
-    <Cell is="12">
-      <div> Hello world! </div>
-    </Cell>
-  </Row>
-</Grid>
-```
+**A predictable gird layout based on flexbox for [React](https://facebook.github.io/react/) applications using inline styles. ([demo](http://broucz.github.io/react-inline-grid))**
 
 [![npm version](https://img.shields.io/npm/v/react-inline-grid.svg?style=flat-square)](https://www.npmjs.com/package/react-inline-grid)
 
@@ -26,17 +16,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Grid, Row, Cell } from 'react-inline-grid';
 
-const box = { background: '#bdbdbd', padding: '8px' };
-
 const Layout = React.createClass({
   render() {
     return (
       <Grid>
         <Row is="center">
-          <Cell is="2 tablet-4 phone-4"><div style={{...box}}></div></Cell>
-          <Cell is="2 tablet-4 phone-4"><div style={{...box}}></div></Cell>
-          <Cell is="2 tablet-6 phone-4"><div style={{...box}}></div></Cell>
-          <Cell is="2 tablet-2 phone-4"><div style={{...box}}></div></Cell>
+          <Cell is="3 tablet-4 phone-4"><div>content_a</div></Cell>
+          <Cell is="3 tablet-4 phone-4"><div>content_b</div></Cell>
         </Row>
       </Grid>
     );
@@ -48,25 +34,46 @@ ReactDOM.render(<Layout />, document.body);
 The library exports `Grid`, `Row` and `Cell`.
 
 ### &lt;Grid />
-Wrap child component with [React Redux](https://github.com/rackt/react-redux#provider-store) `<Provider>`, update store according to device properties update using [media queries](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Media_queries) and exposes the props `options` (array) allowing you to define custom grid settings.
+Grid wrap inner components with [React Redux](https://github.com/rackt/react-redux#provider-store) `<Provider>`. 
+
+Using [Redux](https://github.com/rackt/redux), Grid's inner components can react to store update. Here Redux is used to handle [MediaQueryList](https://developer.mozilla.org/en/docs/Web/API/MediaQueryList) changes and update components `style` property:
+
+```js
+// phone
+<div style="...; width: calc(100% - 16px);"><div>
+
+// tablet
+<div style="...; width: calc(50% - 16px);"><div>
+
+// desktop
+<div style="...; width: calc(25% - 16px);"><div>
+```
+
+Grid exposes the property `options` allowing you to define custom grid settings.
 
 `options` shape:
 
 ```js
-[
-  {
-    name: string    // required     - Name of the target screen, used as key word ex: <name>-12.
-    gutter: number  // default = 0  - Gutter size in pixel.
-    margin: number  // default = 0  - Margin size in pixel.
-    columns: number // default = 12 - Total number of columns for each row.
-    query: string   // required     - Media query to test.
-  }
-]
+{
+  columns: number     // default = 12     - Columns size for the bigger media.
+  gutter: number      // default = 16     - Gutter size in pixel.
+  margin: number      // default = 16     - Margin size in pixel.
+  deaf: bool          // default = false  - Ignore MediaQueryList updates.
+  list: [             // default = [...]  - List of target media.
+    { 
+      name: string    // required                     - Media name.
+      query: string   // required                     - Media query to test.
+      gutter: number  // default = options -> gutter  - Media gutter size in pixel.
+      margin: number  // default = options -> margin  - Media margin size in pixel.
+    }
+  ]
+}
 ```
 
-If `options` is not provided, a default configuration inspired by [Google MDL](http://www.getmdl.io/components/index.html#layout-section/grid) is used. And so, `Grid` apply the following default configuration:
+If `options` is not provided, or invalid, it will be fixed to apply values inspired by [Google Material Design Lite](http://www.getmdl.io/) grid layout:
 
 ```js
+// options -> list
 [
   {
     name: 'phone',
@@ -92,12 +99,11 @@ If `options` is not provided, a default configuration inspired by [Google MDL](h
 ]
 ```
 
-Also, as the style properties are generated from `options` using the  ["bigger" device as reference](https://github.com/broucz/react-inline-grid/blob/master/src/utils/hydrateReference.js#L12), target devices order in `options` matters.
-I want to avoid to test queries at loading time or add extra fields in `options` so far, and so I choose the "popular" mobile first approch. **The "bigger" targeted device have to be the last entry of `options`**.
+If no media match the queries, Grid will define the first `options -> list -> value` as default current media in order to match the "popular" mobile first approch.
 
 ### &lt;Row />
 
-Exposes the props `is` (string) to alterate the following default style object:
+Exposes the property `is` (string) to update the following default style object:
 
 ```js
 {
@@ -114,16 +120,31 @@ Exposes the props `is` (string) to alterate the following default style object:
 - `between`
 
 ```js
-<Row is="center">
+<Row is="center phone-end">
   <Cell>
     <div>Content</div>
   </Cell>
 </Row>
+
+// not phone
+<div style="...; justify-content:center;">
+  <Cell>
+    <div>Content</div>
+  </Cell>
+</div>
+
+// phone
+<div style="...; justify-content:flex-end;">
+  <Cell>
+    <div>Content</div>
+  </Cell>
+</div>
+
 ```
 
 ### &lt;Cell />
 
-Exposes the props `is` (string) to alterate the following default style object:
+Exposes the property `is` (string) to update the following default style object:
 
 ```js
 {
@@ -131,8 +152,9 @@ Exposes the props `is` (string) to alterate the following default style object:
 }
 ```
 `is` specify cell size and `align-self` style property as:
-- `<screen name?>-<value>`
-- `<screen name?>-offset-<value>`
+- `<value>`
+- `<media name?>-<value>`
+- `<media name?>-offset-<value>`
 - `top`
 - `middle`
 - `bottom`
@@ -144,6 +166,41 @@ Exposes the props `is` (string) to alterate the following default style object:
     <div>Content</div>
   </Cell>
 </Row>
+
+// desktop
+<Row>
+  <div style="...; width:calc(33.33...% - 16px);align-self:center;margin-left:calc(8.33...% - 8px);">
+    <div>Content</div>
+  </div>
+</Row>
+
+// tablet
+<Row>
+  <div style="...; width:calc(12.5% - 16px);align-self:center;margin-left:calc(25% - 8px);">
+    <div>Content</div>
+  </div>
+</Row>
+
+// phone
+<Row>
+  <div style="...; width:calc(25% - 16px);align-self:center;margin-left:calc(100% - 8px);">
+    <div>Content</div>
+  </div>
+</Row>
+```
+
+For both `<Row />` and `<Cell />`, `is` property ask for an "already defined" values, the last one is used:
+
+```js
+<Cell is="3 2 1">
+  <div>Content</div>
+</Cell>
+
+// will be defined as
+
+<Cell is="1">
+  <div>Content</div>
+</Cell>
 ```
 
 ## Examples
