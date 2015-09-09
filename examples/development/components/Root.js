@@ -3,10 +3,8 @@ import { Grid, Row, Cell } from 'react-inline-grid';
 
 const box = { background: '#bdbdbd', padding: '8px' };
 const options = {
-  columns: 12,
   gutter: 16,
   margin: 16,
-  deaf: false,
   list: [
     {
       name: 'phone',
