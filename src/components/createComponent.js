@@ -1,6 +1,6 @@
 import React, { Component, PropTypes, Children, cloneElement } from 'react';
 import { connect } from 'react-redux';
-import getStyle from '../utils/getStyle';
+import pick from '../utils/pick';
 
 const mapStateToProps = state => ({ ...state });
 
@@ -16,8 +16,8 @@ const mergeProps =
 const gridShape =
   PropTypes.shape({
     media: PropTypes.object.isRequired,
-    is: PropTypes.string,
-    reference: PropTypes.object.isRequired
+    reference: PropTypes.object.isRequired,
+    is: PropTypes.string
   }).isRequired;
 
 export function elem(tag) {
@@ -33,7 +33,7 @@ export function elem(tag) {
     render() {
       const { grid, children, ...clean } = this.props;
       return (
-        <div style={getStyle(tag, grid)}>
+        <div style={pick(tag, grid)}>
           {Children.map(children, child => {
             return cloneElement(child, {...clean});
           })}
