@@ -1,7 +1,6 @@
 import { createStore, combineReducers } from 'redux';
 import media, { hydrateMedia } from './reducers/media';
-import reference from './reducers/reference';
-import hydrateReference from './utils/hydrateReference';
+import reference, { hydrateReference } from './reducers/reference';
 
 export default function store(initialState) {
   return createStore(
