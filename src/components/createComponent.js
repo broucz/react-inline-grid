@@ -27,7 +27,14 @@ const elem = (tag) => {
     };
 
     shouldComponentUpdate(nextProps) {
-      return nextProps.grid.media.name !== this.props.grid.media.name;
+      if (process.env.NODE_ENV !== 'production') {
+        return true;
+      }
+
+      if (process.env.NODE_ENV === 'production') {
+        return (nextProps.grid.media.name !== this.props.grid.media.name)
+          || (nextProps.grid.is !== this.props.grid.is);
+      }
     }
 
     render() {
