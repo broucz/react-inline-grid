@@ -11,7 +11,7 @@ class Intro extends Component {
       <div>
         <Row is="center">
           <Cell is="10">
-            <p>A simplified and predictable inline grid for laying out content in <a href="https://facebook.github.io/react/" target="_blank">React</a> applications using <a href="https://github.com/rackt/redux" target="_blank">Redux</a>.</p>
+            <p style={{textAlign: 'center'}}>A predictable gird layout based on flexbox for <a href="https://facebook.github.io/react/" target="_blank">React</a> applications using inline styles.</p>
           </Cell>
         </Row>
         <Row>
