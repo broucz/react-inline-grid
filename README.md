@@ -215,7 +215,7 @@ git clone https://github.com/broucz/react-inline-grid.git
 cd react-inline-grid
 npm install
 
-cd examples/gh-pages
+cd examples/react-transform-boilerplate
 npm install
 
 npm start
