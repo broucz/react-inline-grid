@@ -40,9 +40,10 @@ export function ensureValue(options, base, key, value) {
   }
 
   if (value >= 0) return value;
-  return (options && options[key] >= 0)
+  const result = (options && options[key] >= 0)
     ? options[key]
     : base[key];
+  return result;
 }
 
 export function ensureListProperties(options, base, list) {
