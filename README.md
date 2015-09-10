@@ -1,6 +1,6 @@
 # [React Inline Grid](http://broucz.github.io/react-inline-grid)
 
-**A predictable gird layout based on flexbox for [React](https://facebook.github.io/react/) applications using inline styles. ([demo](http://broucz.github.io/react-inline-grid))**
+**A predictable gird layout based on flexbox for [React](https://facebook.github.io/react/) applications using inline styles.**
 
 [![npm version](https://img.shields.io/npm/v/react-inline-grid.svg?style=flat-square)](https://www.npmjs.com/package/react-inline-grid)
 
