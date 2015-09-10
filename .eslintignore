@@ -16,3 +16,6 @@ examples/performance-test/node_modules
 examples/performance-test/dist
 examples/performance-test/webpack.config.base.js
 examples/performance-test/webpack.config.production.js
+examples/react-transform-boilerplate/node_modules
+examples/react-transform-boilerplate/server.js
+examples/react-transform-boilerplate/webpack.config.js
