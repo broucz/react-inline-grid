@@ -9,11 +9,6 @@ class Intro extends Component {
   render() {
     return (
       <div>
-        <Row is="center">
-          <Cell is="10">
-            <p style={{textAlign: 'center'}}>A predictable gird layout based on flexbox for <a href="https://facebook.github.io/react/" target="_blank">React</a> applications using inline styles.</p>
-          </Cell>
-        </Row>
         <Row>
           <Cell is="3 tablet-4 phone-4"><Box color={gray}/></Cell>
           <Cell is="3 tablet-4 phone-4"><Box color={gray}/></Cell>

@@ -142,6 +142,11 @@ a {
   @include small {
     font-size: 1em;
   }
+
+  a {
+    color: #fff;
+    text-decoration: underline;
+  }
 }
 
 .pageContent {
