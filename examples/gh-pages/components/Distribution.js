@@ -40,10 +40,10 @@ class Distribution extends Component {
         <Row>
           <Cell is="12">
             <div style={{background: gray}}>
-              <Row is="around">
-                <Cell is="2 phone-1"><Box color={primary}/></Cell>
-                <Cell is="2 phone-1"><Box color={primary}/></Cell>
-                <Cell is="2 phone-1"><Box color={primary}/></Cell>
+              <Row is="around tablet-nospace phone-nospace">
+                <Cell is="2 tablet-nospace phone-1 phone-nospace"><Box color={primary}/></Cell>
+                <Cell is="2 tablet-nospace phone-1 phone-nospace"><Box color={primary}/></Cell>
+                <Cell is="2 tablet-nospace phone-1 phone-nospace"><Box color={primary}/></Cell>
               </Row>
             </div>
           </Cell>
@@ -60,10 +60,10 @@ class Distribution extends Component {
         <Row>
           <Cell is="12">
             <div style={{background: gray}}>
-              <Row is="between">
-                <Cell is="2 phone-1"><Box color={primary}/></Cell>
-                <Cell is="2 phone-1"><Box color={primary}/></Cell>
-                <Cell is="2 phone-1"><Box color={primary}/></Cell>
+              <Row is="between tablet-nospace phone-nospace">
+                <Cell is="2 tablet-nospace phone-1 phone-nospace"><Box color={primary}/></Cell>
+                <Cell is="2 tablet-nospace phone-1 phone-nospace"><Box color={primary}/></Cell>
+                <Cell is="2 tablet-nospace phone-1 phone-nospace"><Box color={primary}/></Cell>
               </Row>
             </div>
           </Cell>
