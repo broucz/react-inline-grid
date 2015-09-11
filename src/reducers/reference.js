@@ -47,7 +47,7 @@ export const buildCellTypeProperties = (alignSelf) => {
   };
 };
 
-export const sharedProperties = () => {
+export const buildSharedProperties = () => {
   return {
     nospace: { padding: 0, margin: 0 }
   };
@@ -98,6 +98,8 @@ export function hydrateReference({ options }) {
 
     const cell = buildCell(CELL_ID, gutter);
     const cellTypeProperties = buildCellTypeProperties(alignSelf);
+
+    const sharedProperties = buildSharedProperties();
 
     return {
       ...acc,
