@@ -67,8 +67,10 @@ class MatchMedia {
     this.listeners.push(listener);
 
     return function unsubscribe() {
-      const index = this.listeners.indexOf(listener);
-      this.listeners = this.listeners.slice(index, 1);
+      if (this.listeners != null) {
+        const index = this.listeners.indexOf(listener);
+        this.listeners = this.listeners.slice(index, 1);
+      }
     };
   }
 }
