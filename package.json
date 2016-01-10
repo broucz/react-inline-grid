@@ -14,7 +14,7 @@
     "gh:clean": "rimraf examples/gh-pages/dist",
     "gh:build": "webpack -p --config examples/gh-pages/webpack.config.production.js && cp examples/gh-pages/index.html examples/gh-pages/dist/",
     "gh:publish": "npm run gh:clean && npm run gh:build && cd examples/gh-pages/dist && git init && git commit --allow-empty -m 'update gh-pages' && git checkout -b gh-pages && git add . && git commit -am 'update gh-pages' && git push git@github.com:broucz/react-inline-grid gh-pages --force",
-    "test": "mocha --compilers js:babel/register --recursive",
+    "test": "mocha --compilers js:babel-core/register --recursive",
     "test:watch": "npm test -- --watch",
     "test:cov": "babel-node $(npm bin)/isparta cover $(npm bin)/_mocha -- --recursive"
   },
@@ -41,24 +41,27 @@
   "homepage": "https://github.com/broucz/react-inline-grid",
   "dependencies": {
     "lodash": "^3.10.1",
-    "react-redux": "^2.1.1",
-    "redux": "^2.0.0"
+    "react-redux": "^4.0.6",
+    "redux": "^3.0.5"
   },
   "peerDependencies": {
     "react": "^0.14.0 || ^0.14.0-beta3 || ^0.14.0-rc1"
   },
   "devDependencies": {
-    "babel": "^5.8.21",
-    "babel-core": "^5.8.22",
+    "babel-cli": "^6.4.0",
+    "babel-core": "^6.4.0",
     "babel-eslint": "^4.0.10",
-    "babel-loader": "^5.3.2",
+    "babel-loader": "^6.2.1",
+    "babel-preset-es2015-loose": "^6.1.4",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
     "eslint": "^1.2.0",
     "eslint-config-airbnb": "0.0.7",
     "eslint-plugin-react": "^3.2.3",
     "expect": "^1.9.0",
     "isparta": "^3.0.3",
-    "mocha": "^2.2.5",
-    "react-hot-loader": "^1.2.8",
+    "mocha": "^2.3.4",
+    "react-hot-loader": "^1.3.0",
     "rimraf": "^2.4.2",
     "webpack": "^1.11.0",
     "webpack-dev-server": "^1.10.1"
