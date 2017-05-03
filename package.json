@@ -41,12 +41,13 @@
   "homepage": "https://github.com/broucz/react-inline-grid",
   "dependencies": {
     "lodash": "^3.10.1",
-    "react-redux": "^2.1.1",
-    "prop-types": "^15.5.8",
-    "redux": "^2.0.0"
+    "prop-types": "^15.5.0",
+    "react": "^15.5.4",
+    "react-redux": "^5.0.4",
+    "redux": "^3.6.0"
   },
   "peerDependencies": {
-    "react": "^0.14.0 || ^0.14.0-beta3 || ^0.14.0-rc1 || 15.x"
+    "react": "15.x"
   },
   "devDependencies": {
     "babel": "^5.8.21",
