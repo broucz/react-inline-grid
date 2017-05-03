@@ -46,7 +46,7 @@
     "redux": "^2.0.0"
   },
   "peerDependencies": {
-    "react": "^0.14.0 || ^0.14.0-beta3 || ^0.14.0-rc1"
+    "react": "^0.14.0 || ^0.14.0-beta3 || ^0.14.0-rc1 || 15.x"
   },
   "devDependencies": {
     "babel": "^5.8.21",
