@@ -23,7 +23,6 @@ const optionsShape = PropTypes.shape({
 });
 
 export function ensureValue(options, base, key, value) {
-  console.log("IN GRID.js");
   if (process.env.NODE_ENV !== 'production') {
     invariant(
       key,
