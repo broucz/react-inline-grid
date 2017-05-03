@@ -1,4 +1,5 @@
-import React, { Component, PropTypes, Children } from 'react';
+import React, { Component, Children } from 'react';
+import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import matchMedia from '../matchMedia';
 import store from '../store';
