@@ -6,7 +6,7 @@ import Box from './Box';
 
 const { gray, primary } = COLOR;
 
-const strSpace = `Remove <Row> padding and <Cell> maring.
+const strSpace = `Remove <Row> padding and <Cell> margin.
 `;
 
 const str = `<Row is="center nospace">
