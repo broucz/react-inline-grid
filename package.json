@@ -40,7 +40,7 @@
   },
   "homepage": "https://github.com/broucz/react-inline-grid",
   "dependencies": {
-    "lodash": "^3.10.1",
+    "lodash": "^4.17.15",
     "react-redux": "^2.1.1",
     "redux": "^2.0.0"
   },
